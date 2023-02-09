@@ -23,3 +23,6 @@ todo.txt
 .tox
 files.txt
 .vscode
+
+# Tests downloads some postcodes to check against here
+code_point_uk_post_codes.zip

@@ -44,8 +44,8 @@ class AddressParser:
             ) from None
 
     def parse(self, text):
-        """Returns a list of addresses found in text
-        together with parsed address parts
+        """
+        Returns a list of addresses found in text together with parsed address parts
         """
         results = []
         self.clean_text = self._normalize_string(text)
