@@ -1,4 +1,3 @@
-
 """
     pyap.source_GB.data
     ~~~~~~~~~~~~~~~~~~~~
@@ -287,7 +286,9 @@ occupancy = r"""
     )
     {space}?
 )  # end occupancy
-""".format(space=space_pattern)
+""".format(
+    space=space_pattern
+)
 
 po_box = r"""
 (?:

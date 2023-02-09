@@ -1,4 +1,3 @@
-
 """ Test for USA address parser """
 
 import itertools
@@ -7,12 +6,12 @@ import re
 import zipfile
 
 import pandas as pd
-import pyap
-import pyap.parser
-import pyap.source_GB.data as data_gb
 import pytest
 import requests
-from pyap import utils
+
+import pyap_beauhurst
+import pyap_beauhurst.source_GB.data as data_gb
+from pyap_beauhurst import utils
 
 
 def execute_matching_test(input_data, expected, pattern):
@@ -578,9 +577,7 @@ def test_full_address_parts():
             "country": "United Kingdom",
         },
     ]
-    filler_text = (
-        "This is filler text to be inserted both before and after addresses"
-    )
+    filler_text = "This is filler text to be inserted both before and after addresses"
     punctuation = ["\n", ", ", ". ", " "]
 
     # Test each of the above addresses
@@ -601,15 +598,19 @@ def test_full_address_parts():
                     + filler_text_after
                 )
 
-                parsed = pyap.parse(address_text, country="GB")
-                print(pyap.parser.AddressParser._normalize_string(address_text))
+                parsed = pyap_beauhurst.parse(address_text, country="GB")
+                print(
+                    pyap_beauhurst.parser.AddressParser._normalize_string(address_text)
+                )
                 # Ensure that only one address is found
                 assert len(parsed) == 1
                 for k, v in address_parts.items():
                     if k == "full_address":
                         assert parsed[
                             0
-                        ].full_address == pyap.parser.AddressParser._normalize_string(v)
+                        ].full_address == pyap_beauhurst.parser.AddressParser._normalize_string(
+                            v
+                        )
                     else:
                         # assert that every item in the above address
                         # dictionaries match the parsed address

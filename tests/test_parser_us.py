@@ -1,11 +1,11 @@
-
 """ Test for USA address parser """
 
 import re
 
-import pyap.source_US.data as data_us
 import pytest
-from pyap import utils
+
+import pyap_beauhurst.source_US.data as data_us
+from pyap_beauhurst import utils
 
 
 def execute_matching_test(input_data, expected, pattern):

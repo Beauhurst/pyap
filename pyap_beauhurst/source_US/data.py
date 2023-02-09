@@ -1,4 +1,3 @@
-
 """
     pyap.source_US.data
     ~~~~~~~~~~~~~~~~~~~~
@@ -686,9 +685,7 @@ def street_type_list_to_regex(street_type_list):
     """Converts a list of street types into a regex"""
     street_types = "|".join(set(street_type_list)).lower()
     for letter in string.ascii_lowercase:
-        street_types = street_types.replace(
-            letter, f"[{letter.upper()}{letter}]"
-        )
+        street_types = street_types.replace(letter, f"[{letter.upper()}{letter}]")
 
     # Use \b to check that there are word boundaries before and after the street type
     # Optionally match zero to two of " ", ",", or "." after the street name

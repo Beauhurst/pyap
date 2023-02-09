@@ -1,11 +1,11 @@
-
 """ Tests for CANADA address parser """
 
 import re
 
-import pyap.source_CA.data as data_ca
 import pytest
-from pyap import utils
+
+import pyap_beauhurst.source_CA.data as data_ca
+from pyap_beauhurst import utils
 
 
 @pytest.mark.parametrize(
@@ -31,9 +31,7 @@ from pyap import utils
 )
 def test_zero_to_nine(input_data, expected):
     """test string match for zero_to_nine"""
-    is_found = utils.match(
-        data_ca.zero_to_nine, input_data, re.VERBOSE
-    ) is not None
+    is_found = utils.match(data_ca.zero_to_nine, input_data, re.VERBOSE) is not None
     assert is_found == expected
 
 
@@ -59,9 +57,7 @@ def test_zero_to_nine(input_data, expected):
 )
 def test_ten_to_ninety(input_data, expected):
     """test string match for ten_to_ninety"""
-    is_found = utils.match(
-        data_ca.ten_to_ninety, input_data, re.VERBOSE
-    ) is not None
+    is_found = utils.match(data_ca.ten_to_ninety, input_data, re.VERBOSE) is not None
     assert is_found == expected
 
 
@@ -97,9 +93,7 @@ def test_hundred(input_data, expected):
 )
 def test_thousand(input_data, expected):
     """tests string match for a thousand"""
-    is_found = utils.match(
-        data_ca.thousand, input_data, re.VERBOSE
-    ) is not None
+    is_found = utils.match(data_ca.thousand, input_data, re.VERBOSE) is not None
     assert is_found == expected
 
 
@@ -178,10 +172,7 @@ def test_street_number_negative(input_data, expected):
 )
 def test_post_direction(input_data, expected):
     """tests string match for a post_direction"""
-    is_found = (
-        utils.match(data_ca.post_direction, input_data, re.VERBOSE)
-        is not None
-    )
+    is_found = utils.match(data_ca.post_direction, input_data, re.VERBOSE) is not None
     assert is_found == expected
 
 
@@ -208,10 +199,7 @@ def test_post_direction(input_data, expected):
 )
 def test_street_type(input_data, expected):
     """tests string match for a street id"""
-    is_found = (
-        utils.match(data_ca.street_type, input_data, re.VERBOSE)
-        is not None
-    )
+    is_found = utils.match(data_ca.street_type, input_data, re.VERBOSE) is not None
     assert is_found == expected
 
 
@@ -233,9 +221,7 @@ def test_street_type(input_data, expected):
 )
 def test_floor(input_data, expected):
     """tests string match for a floor"""
-    is_found = (
-        utils.match(data_ca.floor, input_data, re.VERBOSE) is not None
-    )
+    is_found = utils.match(data_ca.floor, input_data, re.VERBOSE) is not None
     assert is_found == expected
 
 
@@ -259,9 +245,7 @@ def test_floor(input_data, expected):
 )
 def test_building(input_data, expected):
     """tests string match for a building"""
-    is_found = (
-        utils.match(data_ca.building, input_data, re.VERBOSE) is not None
-    )
+    is_found = utils.match(data_ca.building, input_data, re.VERBOSE) is not None
     assert is_found == expected
 
 
@@ -426,9 +410,7 @@ still finding correct matches in full_address
 )
 def test_full_address_positive(input_data, expected):
     """tests exact string match for a full address"""
-    match = utils.match(
-        data_ca.full_address, input_data, re.VERBOSE | re.U
-    )
+    match = utils.match(data_ca.full_address, input_data, re.VERBOSE | re.U)
     is_found = match is not None
     assert is_found == expected
     assert match.group(0) == input_data

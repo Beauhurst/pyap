@@ -1,9 +1,9 @@
-
 """ Test for parser classes """
 
-import pyap as ap
 import pytest
-from pyap import address, exceptions as e, parser
+
+import pyap_beauhurst as ap
+from pyap_beauhurst import address, exceptions as e, parser
 
 
 def test_api_parse():
