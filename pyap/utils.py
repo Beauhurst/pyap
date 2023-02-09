@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 """
 pyap.utils
@@ -28,8 +27,3 @@ def findall(regex, string, flags=DEFAULT_FLAGS):
 def finditer(regex, string, flags=DEFAULT_FLAGS):
     """Utility function for re.finditer"""
     return list(re.finditer(regex, string, flags=flags))
-
-
-def unicode_str(string):
-    """Return Unicode string"""
-    return string

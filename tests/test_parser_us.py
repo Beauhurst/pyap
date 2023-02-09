@@ -1,28 +1,29 @@
-# -*- coding: utf-8 -*-
 
 """ Test for USA address parser """
 
 import re
+
+import pyap.source_US.data as data_us
 import pytest
 from pyap import utils
-import pyap.source_US.data as data_us
 
 
-def execute_matching_test(input, expected, pattern):
-    match = utils.match(pattern, input, re.VERBOSE)
+def execute_matching_test(input_data, expected, pattern):
+    match = utils.match(pattern, input_data, re.VERBOSE)
     is_found = match is not None
     if expected:
-        assert is_found == expected and match.group(0) == input
+        assert is_found == expected
+        assert match.group(0) == input_data
     else:
         """we check that:
-        - input should not to match our regex
+        - input_data should not to match our regex
         - our match should be partial if regex matches some part of string
         """
-        assert (is_found == expected) or (match.group(0) != input)
+        assert (is_found == expected) or (match.group(0) != input_data)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("ZERO ", True),
@@ -42,13 +43,13 @@ def execute_matching_test(input, expected, pattern):
         ("onetwothree ", False),
     ],
 )
-def test_zero_to_nine(input, expected):
+def test_zero_to_nine(input_data, expected):
     """test string match for zero_to_nine"""
-    execute_matching_test(input, expected, data_us.zero_to_nine)
+    execute_matching_test(input_data, expected, data_us.zero_to_nine)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("tEN ", True),
@@ -67,13 +68,13 @@ def test_zero_to_nine(input, expected):
         ("one twenty ", False),
     ],
 )
-def test_ten_to_ninety(input, expected):
+def test_ten_to_ninety(input_data, expected):
     """test string match for ten_to_ninety"""
-    execute_matching_test(input, expected, data_us.ten_to_ninety)
+    execute_matching_test(input_data, expected, data_us.ten_to_ninety)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("Hundred ", True),
@@ -83,13 +84,13 @@ def test_ten_to_ninety(input, expected):
         ("HuNDdred hundred ", False),
     ],
 )
-def test_hundred(input, expected):
+def test_hundred(input_data, expected):
     """tests string match for a hundred"""
-    execute_matching_test(input, expected, data_us.hundred)
+    execute_matching_test(input_data, expected, data_us.hundred)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("Thousand ", True),
@@ -101,13 +102,13 @@ def test_hundred(input, expected):
         ("THOUssand THoussand ", False),
     ],
 )
-def test_thousand(input, expected):
+def test_thousand(input_data, expected):
     """tests string match for a thousand"""
-    execute_matching_test(input, expected, data_us.thousand)
+    execute_matching_test(input_data, expected, data_us.thousand)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions (words)
         ("One Thousand And Fifty Nine ", True),
@@ -134,13 +135,13 @@ def test_thousand(input, expected):
         ("123 456", False),
     ],
 )
-def test_street_number(input, expected):
+def test_street_number(input_data, expected):
     """tests string match for a street number"""
-    execute_matching_test(input, expected, data_us.street_number)
+    execute_matching_test(input_data, expected, data_us.street_number)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("Northeast Kentucky Industrial ", True),
@@ -154,13 +155,13 @@ def test_street_number(input, expected):
         ("ab", False),
     ],
 )
-def test_street_name(input, expected):
+def test_street_name(input_data, expected):
     """tests positive string match for a street name"""
-    execute_matching_test(input, expected, data_us.street_name)
+    execute_matching_test(input_data, expected, data_us.street_name)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("N. ", True),
@@ -177,13 +178,13 @@ def test_street_name(input, expected):
         ("EW ", False),
     ],
 )
-def test_post_direction(input, expected):
+def test_post_direction(input_data, expected):
     """tests string match for a post_direction"""
-    execute_matching_test(input, expected, data_us.post_direction)
+    execute_matching_test(input_data, expected, data_us.post_direction)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("Street ", True),
@@ -208,13 +209,13 @@ def test_post_direction(input, expected):
         # TODO
     ],
 )
-def test_street_type(input, expected):
+def test_street_type(input_data, expected):
     """tests string match for a street id"""
-    execute_matching_test(input, expected, data_us.street_type)
+    execute_matching_test(input_data, expected, data_us.street_type)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("floor 3 ", True),
@@ -229,13 +230,13 @@ def test_street_type(input, expected):
         ("1stfloor ", False),
     ],
 )
-def test_floor(input, expected):
+def test_floor(input_data, expected):
     """tests string match for a floor"""
-    execute_matching_test(input, expected, data_us.floor)
+    execute_matching_test(input_data, expected, data_us.floor)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("bldg m ", True),
@@ -254,13 +255,13 @@ def test_floor(input, expected):
         ("building 10000 ", False),
     ],
 )
-def test_building(input, expected):
+def test_building(input_data, expected):
     """tests string match for a building"""
-    execute_matching_test(input, expected, data_us.building)
+    execute_matching_test(input_data, expected, data_us.building)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("suite 900 ", True),
@@ -288,13 +289,13 @@ def test_building(input, expected):
         ("suite218 ", False),
     ],
 )
-def test_occupancy(input, expected):
+def test_occupancy(input_data, expected):
     """tests string match for a place id"""
-    execute_matching_test(input, expected, data_us.occupancy)
+    execute_matching_test(input_data, expected, data_us.occupancy)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("po box 108", True),
@@ -308,13 +309,13 @@ def test_occupancy(input, expected):
         ("POb ox1070 ", False),
     ],
 )
-def test_po_box_positive(input, expected):
+def test_po_box_positive(input_data, expected):
     """tests exact string match for a po box"""
-    execute_matching_test(input, expected, data_us.po_box)
+    execute_matching_test(input_data, expected, data_us.po_box)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("9652 Loiret Boulevard", True),
@@ -371,13 +372,13 @@ def test_po_box_positive(input, expected):
         ("901 Rainier Ave S ", True),
     ],
 )
-def test_full_street_positive(input, expected):
+def test_full_street_positive(input_data, expected):
     """tests exact string match for a full street"""
-    execute_matching_test(input, expected, data_us.full_street)
+    execute_matching_test(input_data, expected, data_us.full_street)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("0 OLD MILL RD, Maynard, MA 01754", True),
@@ -470,13 +471,13 @@ def test_full_street_positive(input, expected):
         ("00 Straight Fit Jean, USA", False),
     ],
 )
-def test_full_address(input, expected):
+def test_full_address(input_data, expected):
     """tests exact string match for a full address"""
-    execute_matching_test(input, expected, data_us.full_address)
+    execute_matching_test(input_data, expected, data_us.full_address)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("75062", True),
@@ -492,13 +493,13 @@ def test_full_address(input, expected):
         ("95130-64212", False),
     ],
 )
-def test_postal_code(input, expected):
+def test_postal_code(input_data, expected):
     """test exact string match for postal code"""
-    execute_matching_test(input, expected, data_us.postal_code)
+    execute_matching_test(input_data, expected, data_us.postal_code)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("Montana", True),
@@ -509,13 +510,13 @@ def test_postal_code(input, expected):
         ("oregon", True),
     ],
 )
-def test_region1(input, expected):
+def test_region1(input_data, expected):
     """test exact string match for province"""
-    execute_matching_test(input, expected, data_us.region1)
+    execute_matching_test(input_data, expected, data_us.region1)
 
 
 @pytest.mark.parametrize(
-    "input,expected",
+    ("input_data", "expected"),
     [
         # positive assertions
         ("USA", True),
@@ -523,6 +524,6 @@ def test_region1(input, expected):
         ("United States", True),
     ],
 )
-def test_country(input, expected):
+def test_country(input_data, expected):
     """test exact string match for country"""
-    execute_matching_test(input, expected, data_us.country)
+    execute_matching_test(input_data, expected, data_us.country)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 """
     pyap.address
@@ -12,7 +11,7 @@
 """
 
 
-class Address(object):
+class Address:
     def __init__(self, **args):
         keys = []
         vals = []

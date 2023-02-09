@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 """
     pyap.source_US.data
@@ -15,7 +14,6 @@
 """
 
 import string
-
 
 """Numerals from one to nine
 Note: here and below we use syntax like '[Oo][Nn][Ee]'
@@ -689,7 +687,7 @@ def street_type_list_to_regex(street_type_list):
     street_types = "|".join(set(street_type_list)).lower()
     for letter in string.ascii_lowercase:
         street_types = street_types.replace(
-            letter, "[{upper}{lower}]".format(upper=letter.upper(), lower=letter)
+            letter, f"[{letter.upper()}{letter}]"
         )
 
     # Use \b to check that there are word boundaries before and after the street type

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 """
     pyap.source_GB.data

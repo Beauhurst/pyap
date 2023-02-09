@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
 
 """ Test for parser classes """
 
-import pytest
 import pyap as ap
-from pyap import parser
-from pyap import address
-from pyap import exceptions as e
+import pytest
+from pyap import address, exceptions as e, parser
 
 
 def test_api_parse():

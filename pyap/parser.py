@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 """
     pyap.parser
@@ -11,12 +10,10 @@
     :license: MIT, see LICENSE for more details.
 """
 
-import re
 import importlib
+import re
 
-from . import exceptions as e
-from . import address
-from . import utils
+from . import address, exceptions as e, utils
 
 
 class AddressParser:
@@ -36,7 +33,7 @@ class AddressParser:
         except AttributeError:
             raise e.NoCountrySelected(
                 "No country specified during library initialization.", "Error 1"
-            )
+            ) from None
 
         except ImportError:
             raise e.CountryDetectionMissing(
@@ -44,7 +41,7 @@ class AddressParser:
                     country=self.country
                 ),
                 "Error 2",
-            )
+            ) from None
 
     def parse(self, text):
         """Returns a list of addresses found in text
