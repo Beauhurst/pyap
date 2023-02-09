@@ -15,13 +15,12 @@ from .packages import six
 
 
 class Address(object):
-
     def __init__(self, **args):
         keys = []
         vals = []
         for k, v in six.iteritems(args):
             if v and isinstance(v, str):
-                v = v.strip(' ,;:')
+                v = v.strip(" ,;:")
             # create object variables
             setattr(self, k, v)
             # prepare for dict
@@ -35,11 +34,11 @@ class Address(object):
 
     def __repr__(self):
         # Address object is represented as textual address
-        address = ''
+        address = ""
         try:
             address = self.full_address
         except AttributeError:
             pass
         if six.PY2:
-            address = address.encode('utf-8')
+            address = address.encode("utf-8")
         return address
