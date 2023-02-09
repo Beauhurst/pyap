@@ -11,14 +11,12 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from .packages import six
-
 
 class Address(object):
     def __init__(self, **args):
         keys = []
         vals = []
-        for k, v in six.iteritems(args):
+        for k, v in args.items():
             if v and isinstance(v, str):
                 v = v.strip(" ,;:")
             # create object variables
@@ -39,6 +37,5 @@ class Address(object):
             address = self.full_address
         except AttributeError:
             pass
-        if six.PY2:
-            address = address.encode("utf-8")
+
         return address

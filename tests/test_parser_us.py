@@ -5,7 +5,6 @@
 import re
 import pytest
 from pyap import utils
-from pyap.packages import six
 import pyap.source_US.data as data_us
 
 

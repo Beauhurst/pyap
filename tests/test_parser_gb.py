@@ -2,18 +2,18 @@
 
 """ Test for USA address parser """
 
+import itertools
 import re
 import pytest
 import pandas as pd
 import pathlib
 import zipfile
 import requests
-import itertools
+
 import pyap
 import pyap.parser
-from pyap import utils
-from pyap.packages import six
 import pyap.source_GB.data as data_gb
+from pyap import utils
 
 
 def execute_matching_test(input, expected, pattern):
@@ -603,7 +603,7 @@ def test_full_address_parts():
                 print(pyap.parser.AddressParser._normalize_string(address_text))
                 # Ensure that only one address is found
                 assert len(parsed) == 1
-                for k, v in six.iteritems(address_parts):
+                for k, v in address_parts.items():
                     if k == "full_address":
                         assert parsed[
                             0

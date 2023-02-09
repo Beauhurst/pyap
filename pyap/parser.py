@@ -17,13 +17,12 @@ import importlib
 from . import exceptions as e
 from . import address
 from . import utils
-from .packages import six
 
 
 class AddressParser:
     def __init__(self, **args):
         """Initialize with custom arguments"""
-        for k, v in six.iteritems(args):
+        for k, v in args.items():
             # store country id in uppercase
             if k == "country":
                 v = v.upper()
@@ -52,9 +51,6 @@ class AddressParser:
         together with parsed address parts
         """
         results = []
-        if isinstance(text, str):
-            if six.PY2:
-                text = unicode(text, "utf-8")
         self.clean_text = self._normalize_string(text)
 
         # get addresses
@@ -95,7 +91,7 @@ class AddressParser:
         """
         keys = []
         vals = []
-        for k, v in six.iteritems(match_as_dict):
+        for k, v in match_as_dict.items():
             if k[-2:] in "_a_b_c_d_e_f_g_h_i_j_k_l_m":
                 if v:
                     # strip last 2 chars: '..._b' -> '...'
@@ -129,6 +125,6 @@ class AddressParser:
             "—": "-",
             "―": "-",
         }
-        for find, replace in six.iteritems(conversion):
+        for find, replace in conversion.items():
             text = re.sub(find, replace, text, flags=re.UNICODE)
         return text
