@@ -2,7 +2,6 @@
 
 import itertools
 import pathlib
-import re
 import zipfile
 
 import pandas as pd
@@ -11,18 +10,8 @@ import requests
 
 import pyap_beauhurst
 import pyap_beauhurst.source_GB.data as data_gb
-from pyap_beauhurst import utils
-
-
-def execute_matching_test(input_data, expected, pattern):
-    match = utils.match(pattern, input_data, re.VERBOSE)
-    is_found = match is not None
-    if expected:
-        assert is_found == expected
-        if is_found:
-            assert match.group(0) == input_data
-        else:
-            assert is_found == expected or match.group(0) != input_data
+from pyap_beauhurst.address import Address
+from test_utils import execute_matching_test
 
 
 @pytest.mark.parametrize(

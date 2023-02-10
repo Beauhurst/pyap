@@ -1,25 +1,9 @@
 """ Test for USA address parser """
 
-import re
-
 import pytest
 
 import pyap_beauhurst.source_US.data as data_us
-from pyap_beauhurst import utils
-
-
-def execute_matching_test(input_data, expected, pattern):
-    match = utils.match(pattern, input_data, re.VERBOSE)
-    is_found = match is not None
-    if expected:
-        assert is_found == expected
-        assert match.group(0) == input_data
-    else:
-        """we check that:
-        - input_data should not to match our regex
-        - our match should be partial if regex matches some part of string
-        """
-        assert (is_found == expected) or (match.group(0) != input_data)
+from test_utils import execute_matching_test
 
 
 @pytest.mark.parametrize(

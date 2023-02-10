@@ -1,11 +1,9 @@
 """ Tests for CANADA address parser """
 
-import re
-
 import pytest
 
 import pyap_beauhurst.source_CA.data as data_ca
-from pyap_beauhurst import utils
+from test_utils import execute_matching_test
 
 
 @pytest.mark.parametrize(
