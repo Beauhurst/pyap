@@ -25,7 +25,7 @@ class AddressParser:
             setattr(self, k, v)
         try:
             # import detection rules
-            package = "pyap" + ".source_" + self.country + ".data"
+            package = "pyap_beauhurst" + ".source_" + self.country + ".data"
             data = importlib.import_module(package)
             self.rules = data.full_address
 
