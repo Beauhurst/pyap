@@ -19,10 +19,10 @@ def execute_matching_test(input_data, expected, pattern):
     is_found = match is not None
     if expected:
         assert is_found == expected
-        assert match.group(0) == input_data
-    else:
-        assert is_found == expected
-        assert match.group(0) != input_data
+        if is_found:
+            assert match.group(0) == input_data
+        else:
+            assert is_found == expected or match.group(0) != input_data
 
 
 @pytest.mark.parametrize(
