@@ -450,14 +450,14 @@ def test_postal_code_extensive():
             f.write(r.content)
 
     # Run the detector against this list to ensure we pickup all post codes
-    with zipfile.ZipFile(zip_location.name) as zip:
+    with zipfile.ZipFile(zip_location.name) as zipfd:
         data_file_names = [
             name
-            for name in zip.namelist()
+            for name in zipfd.namelist()
             if name.lower().endswith(".csv") and name.startswith("Data/CSV")
         ]
         for data_file_name in data_file_names:
-            with zip.open(data_file_name) as data_file:
+            with zipfd.open(data_file_name) as data_file:
                 df = pd.read_csv(data_file, header=None)
                 post_codes = df.loc[:, 0].values.tolist()
                 for post_code in post_codes:
@@ -599,9 +599,7 @@ def test_full_address_parts():
                 )
 
                 parsed = pyap_beauhurst.parse(address_text, country="GB")
-                print(
-                    pyap_beauhurst.parser.AddressParser._normalize_string(address_text)
-                )
+                print(pyap_beauhurst.AddressParser._normalize_string(address_text))
                 # Ensure that only one address is found
                 assert len(parsed) == 1
                 for k, v in address_parts.items():
