@@ -1,4 +1,4 @@
-""" Test for USA address parser """
+""" Test for GB address parser """
 
 import itertools
 import pathlib
