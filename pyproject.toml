@@ -55,6 +55,7 @@ max-complexity = 12
 
 [tool.ruff.flake8-quotes]
 docstring-quotes = "double"
+inline-quotes = "double"
 
 [tool.ruff.isort]
 combine-as-imports = true
