@@ -7,5 +7,8 @@ ruff check .
 # black
 black --check .
 
+# mypy
+mypy .
+
 # pytest
 pytest .
