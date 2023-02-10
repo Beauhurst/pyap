@@ -11,13 +11,18 @@
 
 import importlib
 import re
+from typing import Any, Dict, List, Optional, Union
 
 from . import address, exceptions as e, utils
 
 
 class AddressParser:
-    def __init__(self, **args):
+    country: str
+    clean_text: str
+
+    def __init__(self, **args: Any):
         """Initialize with custom arguments"""
+
         for k, v in args.items():
             # store country id in uppercase
             if k == "country":
@@ -42,40 +47,48 @@ class AddressParser:
                 "Error 2",
             ) from None
 
-    def parse(self, text):
+    def parse(self, text: str) -> List[Optional[address.Address]]:
         """
         Returns a list of addresses found in text together with parsed address parts
         """
-        results = []
+        results: List[Optional[address.Address]] = []
         self.clean_text = self._normalize_string(text)
 
         # get addresses
         address_matches = utils.finditer(self.rules, self.clean_text)
+
         if address_matches:
             # append parsed address info
-            results = list(map(self._parse_address, address_matches))
+            results: List[Optional[address.Address]] = list(  # type: ignore[no-redef]
+                map(self._parse_address, address_matches)
+            )
 
         return results
 
-    def _parse_address(self, match):
+    def _parse_address(self, match: Union[re.Match, str]) -> Optional[address.Address]:
         """Parses address into parts"""
         if isinstance(match, str):
-            # If the address is passed as a match it saves foing the match twice
-            match = utils.match(self.rules, match, flags=re.VERBOSE | re.U)
+            # If the address is passed as a match it saves doing the match twice
+            match: Optional[re.Match] = utils.match(  # type: ignore[no-redef]
+                self.rules, match, flags=re.VERBOSE | re.U
+            )
         if match:
-            match_as_dict = match.groupdict()
-            match_as_dict.update({"country_id": self.country})
-            # combine results
-            cleaned_dict = self._combine_results(match_as_dict)
-            cleaned_dict["match_start"] = match.start()
-            cleaned_dict["match_end"] = match.end()
-            # create object containing results
-            return address.Address(**cleaned_dict)
+            if isinstance(match, re.Match):
+                match_as_dict = match.groupdict()
+                match_as_dict.update({"country_id": self.country})
+                # combine results
+                cleaned_dict = self._combine_results(match_as_dict)
+                cleaned_dict["match_start"] = match.start()
+                cleaned_dict["match_end"] = match.end()
+                # create object containing results
+                return address.Address(**cleaned_dict)
 
-        return False
+        return None
 
     @staticmethod
-    def _combine_results(match_as_dict):
+    def _combine_results(
+        match_as_dict: Dict[str, Union[str, int, None]]
+    ) -> Dict[str, Union[str, int, None]]:
         """Combine results from different parsed parts:
         we look for non-empty results in values like
         'postal_code_b' or 'postal_code_c' and store
@@ -85,8 +98,8 @@ class AddressParser:
             becomes:
            'postal_code'  :'123456'
         """
-        keys = []
-        vals = []
+        keys: List[str] = []
+        vals: List[Union[str, int, None]] = []
         for k, v in match_as_dict.items():
             if k[-2:] in "_a_b_c_d_e_f_g_h_i_j_k_l_m":
                 if v:
@@ -100,7 +113,7 @@ class AddressParser:
         return dict(zip(keys, vals))
 
     @staticmethod
-    def _normalize_string(text):
+    def _normalize_string(text: str) -> str:
         """Prepares incoming text for parsing:
         removes excessive spaces, tabs, newlines, etc.
         """
