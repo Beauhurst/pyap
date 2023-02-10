@@ -32,10 +32,6 @@ pytest-cov = ">=2.12.1,<4.1"
 pytest-mock = ">=3.6.1,<3.11"
 ipython = ">=7.0,<9.0"
 
-#types-colorama = ">=0.4.0,<0.5"
-#types-pkg-resources = ">=0.1.2,<0.2"
-#types-toml = ">=0.1.1,<0.11"
-
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
