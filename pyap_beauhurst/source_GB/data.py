@@ -21,55 +21,53 @@ case modes for subcapturing groups.
 """
 zero_to_nine = r"""
 (?:
-    [Zz][Ee][Rr][Oo]\ |[Oo][Nn][Ee]\ |[Tt][Ww][Oo]\ |
-    [Tt][Hh][Rr][Ee][Ee]\ |[Ff][Oo][Uu][Rr]\ |
-    [Ff][Ii][Vv][Ee]\ |[Ss][Ii][Xx]\ |
-    [Ss][Ee][Vv][Ee][Nn]\ |[Ee][Ii][Gg][Hh][Tt]\ |
-    [Nn][Ii][Nn][Ee]\ |[Tt][Ee][Nn]\ |
-    [Ee][Ll][Ee][Vv][Ee][Nn]\ |
-    [Tt][Ww][Ee][Ll][Vv][Ee]\ |
-    [Tt][Hh][Ii][Rr][Tt][Ee][Ee][Nn]\ |
-    [Ff][Oo][Uu][Rr][Tt][Ee][Ee][Nn]\ |
-    [Ff][Ii][Ff][Tt][Ee][Ee][Nn]\ |
-    [Ss][Ii][Xx][Tt][Ee][Ee][Nn]\ |
-    [Ss][Ee][Vv][Ee][Nn][Tt][Ee][Ee][Nn]\ |
-    [Ee][Ii][Gg][Hh][Tt][Ee][Ee][Nn]\ |
-    [Nn][Ii][Nn][Ee][Tt][Ee][Ee][Nn]\
+    [Zz][Ee][Rr][Oo]\s|[Oo][Nn][Ee]\s|[Tt][Ww][Oo]\s|
+    [Tt][Hh][Rr][Ee][Ee]\s|[Ff][Oo][Uu][Rr]\s|
+    [Ff][Ii][Vv][Ee]\s|[Ss][Ii][Xx]\s|
+    [Ss][Ee][Vv][Ee][Nn]\s|[Ee][Ii][Gg][Hh][Tt]\s|
+    [Nn][Ii][Nn][Ee]\s|[Tt][Ee][Nn]\s|
+    [Ee][Ll][Ee][Vv][Ee][Nn]\s|
+    [Tt][Ww][Ee][Ll][Vv][Ee]\s|
+    [Tt][Hh][Ii][Rr][Tt][Ee][Ee][Nn]\s|
+    [Ff][Oo][Uu][Rr][Tt][Ee][Ee][Nn]\s|
+    [Ff][Ii][Ff][Tt][Ee][Ee][Nn]\s|
+    [Ss][Ii][Xx][Tt][Ee][Ee][Nn]\s|
+    [Ss][Ee][Vv][Ee][Nn][Tt][Ee][Ee][Nn]\s|
+    [Ee][Ii][Gg][Hh][Tt][Ee][Ee][Nn]\s|
+    [Nn][Ii][Nn][Ee][Tt][Ee][Ee][Nn]\s
 )
 """
 
 # Numerals - 10, 20, 30 ... 90
 ten_to_ninety = r"""
 (?:
-    [Tt][Ee][Nn]\ |[Tt][Ww][Ee][Nn][Tt][Yy]\ |
-    [Tt][Hh][Ii][Rr][Tt][Yy]\ |
-    [Ff][Oo][Rr][Tt][Yy]\ |
-    [Ff][Oo][Uu][Rr][Tt][Yy]\ |
-    [Ff][Ii][Ff][Tt][Yy]\ |[Ss][Ii][Xx][Tt][Yy]\ |
-    [Ss][Ee][Vv][Ee][Nn][Tt][Yy]\ |
-    [Ee][Ii][Gg][Hh][Tt][Yy]\ |
-    [Nn][Ii][Nn][Ee][Tt][Yy]\
+    [Tt][Ee][Nn]\s|[Tt][Ww][Ee][Nn][Tt][Yy]\s|
+    [Tt][Hh][Ii][Rr][Tt][Yy]\s|
+    [Ff][Oo][Rr][Tt][Yy]\s|
+    [Ff][Oo][Uu][Rr][Tt][Yy]\s|
+    [Ff][Ii][Ff][Tt][Yy]\s|[Ss][Ii][Xx][Tt][Yy]\s|
+    [Ss][Ee][Vv][Ee][Nn][Tt][Yy]\s|
+    [Ee][Ii][Gg][Hh][Tt][Yy]\s|
+    [Nn][Ii][Nn][Ee][Tt][Yy]\s
 )
 """
 
 # One hundred
 hundred = r"""
 (?:
-    [Hh][Uu][Nn][Dd][Rr][Ee][Dd]\
+    [Hh][Uu][Nn][Dd][Rr][Ee][Dd]\s
 )
 """
 
 # One thousand
 thousand = r"""
 (?:
-    [Tt][Hh][Oo][Uu][Ss][Aa][Nn][Dd]\
+    [Tt][Hh][Oo][Uu][Ss][Aa][Nn][Dd]\s
 )
 """
 
-part_divider = r"(?: [\,\ \.\-]{0,3}\,[\,\ \.\-]{0,3} )"
-space_pattern = (
-    r"(?: [\ \t]{1,3} )"  # TODO: use \b for word boundary & \s for whitespace
-)
+part_divider = r"(?: [\,\s\.\-]{0,3}\,[\,\s\.\-]{0,3} )"
+space_pattern = r"(?: [\s\t]{1,3} )"  # TODO: use \b for word boundary
 
 """
 Regexp for matching street number.
@@ -93,15 +91,15 @@ street_number = r"""
     )?
     (?:
         (?:
-            [Aa][Nn][Dd]\
+            [Aa][Nn][Dd]\s
             |
-            {thousand}
+            {thousand} 
             |
-            {hundred}
+            {hundred} 
             |
-            {zero_to_nine}
+            {zero_to_nine} 
             |
-            {ten_to_ninety}
+            {ten_to_ninety} 
         ){from_to}
         |
         (?:
@@ -133,9 +131,9 @@ street_name = r"""
 (?P<street_name>
     (?(street_number)           # If street_number has been found, then digits
                                 # can be in the street otherwise no digits are
-        [a-zA-Z0-9\ \.]{3,31}   # allowed. This aims to prevent street_name
+        [a-zA-Z0-9\s\.]{3,31}   # allowed. This aims to prevent street_name
         |                       # matching everything before the address as
-        [a-zA-Z\ \.]{3,31}      # well as the number.
+        [a-zA-Z\s\.]{3,31}      # well as the number.
     )
 )
 """
@@ -143,18 +141,18 @@ street_name = r"""
 post_direction = r"""
 (?P<post_direction>
     (?:
-        [Nn][Oo][Rr][Tt][Hh]\ |
-        [Ss][Oo][Uu][Tt][Hh]\ |
-        [Ee][Aa][Ss][Tt]\ |
-        [Ww][Ee][Ss][Tt]\
+        [Nn][Oo][Rr][Tt][Hh]\s|
+        [Ss][Oo][Uu][Tt][Hh]\s|
+        [Ee][Aa][Ss][Tt]\s |
+        [Ww][Ee][Ss][Tt]\s 
     )
     |
     (?:
-        NW\ |NE\ |SW\ |SE\
+        NW\s|NE\s|SW\s|SE\s
     )
     |
     (?:
-        N\.?\ |S\.?\ |E\.?\ |W\.?\
+        N\.?\s|S\.?\s|E\.?\s|W\.?\s
     )
 )  # end post_direction
 """
@@ -217,11 +215,11 @@ street_type = r"""
 floor = r"""
 (?P<floor>
     (?:
-    \d+[A-Za-z]{0,2}\.?\ [Ff][Ll][Oo][Oo][Rr]\
+    \d+[A-Za-z]{0,2}\.?\s[Ff][Ll][Oo][Oo][Rr]\s
     )
     |
     (?:
-        [Ff][Ll][Oo][Oo][Rr]\ \d+[A-Za-z]{0,2}\
+        [Ff][Ll][Oo][Oo][Rr]\s\d+[A-Za-z]{0,2}\s
     )
 )  # end floor
 """
@@ -233,10 +231,10 @@ building = r"""
         |
         (?:[Bb][Ll][Dd][Gg])
     )
-    \
+    \s
     (?:
         (?:
-            [Aa][Nn][Dd]\
+            [Aa][Nn][Dd]\s
             |
             {thousand}
             |
@@ -249,7 +247,7 @@ building = r"""
         |
         \d{{0,4}}[A-Za-z]?
     )
-    \ ?
+    \s ?
 )  # end building_id
 """.format(
     thousand=thousand,
@@ -341,13 +339,13 @@ full_street = r"""
 # region1 is actually a "state"
 region1 = r"""
 (?P<region1>
-    [A-Za-z]{1}[a-zA-Z0-9\ \.\-']{1,35}
+    [A-Za-z]{1}[a-zA-Z0-9\s\.\-']{1,35}
 )  # end region1
 """
 
 city = r"""
 (?P<city>
-    [A-Za-z]{1}[a-zA-Z0-9\ \.\-']{1,35}
+    [A-Za-z]{1}[a-zA-Z0-9\s\.\-']{1,35}
 )  # end city
 """
 
@@ -367,16 +365,16 @@ postal_code = r"""
             [sS][iI][qQ][qQ]|
             [iT][kK][cC][aA]
         )
-        \ {0,}1[zZ]{2}
+        \s{0,}1[zZ]{2}
     )|
     (?:  # British Overseas Territories in zip-code format
         (KY[0-9]|MSR|VG|AI)[ -]{0,}[0-9]{4}
     )|
     # (?:  # Bermuda including this causes too many false positives, so excluded for now
-    #     [a-zA-Z]{2}\ {0,}[0-9]{2}
+    #     [a-zA-Z]{2}\s{0,}[0-9]{2}
     # )|
     (?:  # British Forces Post Office
-        [Bb][Ff][Pp][Oo]\ {0,}[0-9]{1,4}
+        [Bb][Ff][Pp][Oo]\s{0,}[0-9]{1,4}
     )|
     (?:  # Mainland British postcodes
         (?:
@@ -389,24 +387,24 @@ postal_code = r"""
             (?:[BbEeGgLlMmNnSsWw][0-9][0-9]?)|
             (?:[a-pr-uwyzA-PR-UWYZ][a-hk-yxA-HK-XY][0-9][0-9]?)
         )
-        \ {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}
+        \s{0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}
     )
 )  # end postal_code
 """
 
 country = r"""
 (?P<country>
-    (?:[Tt][Hh][Ee]\ *)?[Uu][Nn][Ii][Tt][Ee][Dd]\ *[Kk][Ii][Nn][Gg][Dd][Oo][Mm]\ *[Oo][Ff]\ *(?:[Gg][Rr][Ee][Aa][Tt]\ *)?[Bb][Rr][Ii][Tt][Aa][Ii][Nn](?:\ *[Aa][Nn][Dd]\ *[Nn][Oo][Rr][Tt][Hh][Ee][Rr][Nn]\ *[Ii][Rr][Ee][Ll][Aa][Nn][Dd])?|
-    (?:[Gg][Rr][Ee][Aa][Tt]\ *)?[Bb][Rr][Ii][Tt][Aa][Ii][Nn](?:\ *[Aa][Nn][Dd]\ *[Nn][Oo][Rr][Tt][Hh][Ee][Rr][Nn]\ *[Ii][Rr][Ee][Ll][Aa][Nn][Dd])?|
-    (?:[Tt][Hh][Ee]\ *)?[Uu][Nn][Ii][Tt][Ee][Dd]\ *[Kk][Ii][Nn][Gg][Dd][Oo][Mm]|
-    (?:[Nn][Oo][Rr][Tt][Hh][Ee][Rr][Nn]\ *)?[Ii][Rr][Ee][Ll][Aa][Nn][Dd]|
+    (?:[Tt][Hh][Ee]\s*)?[Uu][Nn][Ii][Tt][Ee][Dd]\s*[Kk][Ii][Nn][Gg][Dd][Oo][Mm]\s*[Oo][Ff]\s*(?:[Gg][Rr][Ee][Aa][Tt]\s*)?[Bb][Rr][Ii][Tt][Aa][Ii][Nn](?:\s*[Aa][Nn][Dd]\s*[Nn][Oo][Rr][Tt][Hh][Ee][Rr][Nn]\s*[Ii][Rr][Ee][Ll][Aa][Nn][Dd])?|
+    (?:[Gg][Rr][Ee][Aa][Tt]\s*)?[Bb][Rr][Ii][Tt][Aa][Ii][Nn](?:\s*[Aa][Nn][Dd]\s*[Nn][Oo][Rr][Tt][Hh][Ee][Rr][Nn]\s*[Ii][Rr][Ee][Ll][Aa][Nn][Dd])?|
+    (?:[Tt][Hh][Ee]\s*)?[Uu][Nn][Ii][Tt][Ee][Dd]\s*[Kk][Ii][Nn][Gg][Dd][Oo][Mm]|
+    (?:[Nn][Oo][Rr][Tt][Hh][Ee][Rr][Nn]\s*)?[Ii][Rr][Ee][Ll][Aa][Nn][Dd]|
     [Ee][Nn][Gg][Ll][Aa][Nn][Dd]|
     [Ss][Cc][Oo][Tt][Ll][Aa][Nn][Dd]|
     [Ww][Aa][Ll][Ee][Ss]|
     [Cc][Yy][Mm][Rr][Uu]|
     [Gg][Bb]|
     [Uu][Kk]|
-    [Nn]\.?\ *[Ii]\.?
+    [Nn]\.?\s*[Ii]\.?
 )  # end country
 """
 
