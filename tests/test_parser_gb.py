@@ -1,11 +1,11 @@
 """ Test for GB address parser """
-
+import csv
 import itertools
 import pathlib
 import re
 import zipfile
+from io import TextIOWrapper
 
-import pandas as pd
 import pytest
 import requests
 
@@ -450,18 +450,17 @@ def test_postal_code_extensive():
             f.write(r.content)
 
     # Run the detector against this list to ensure we pickup all post codes
-    with zipfile.ZipFile(zip_location.name) as zipfd:
+    with zipfile.ZipFile("code_point_uk_post_codes.zip") as zipfd:
         data_file_names = [
             name
             for name in zipfd.namelist()
             if name.lower().endswith(".csv") and name.startswith("Data/CSV")
         ]
         for data_file_name in data_file_names:
-            with zipfd.open(data_file_name) as data_file:
-                df = pd.read_csv(data_file, header=None)
-                post_codes = df.loc[:, 0].values.tolist()
-                for post_code in post_codes:
-                    execute_matching_test(post_code, True, data_gb.postal_code)
+            with zipfd.open(data_file_name, mode="r") as data_file:
+                reader = csv.reader(TextIOWrapper(data_file, "utf-8"))
+                for row in reader:
+                    execute_matching_test(row[0], True, data_gb.postal_code)
 
 
 @pytest.mark.parametrize(
