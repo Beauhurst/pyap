@@ -351,31 +351,6 @@ city = r"""
 
 postal_code = r"""
 (?P<postal_code>
-    # Girobank postcode
-    (?:[gG][iI][rR] {0,}0[aA]{2})|
-    (?:  # British Overseas Territories in usual format
-        (?:
-            [aA][sS][cC][nN]|
-            [sS][tT][hH][lL]|
-            [tT][dD][cC][uU]|
-            [bB][bB][nN][dD]|
-            [bB][iI][qQ][qQ]|
-            [fF][iI][qQ][qQ]|
-            [pP][cC][rR][nN]|
-            [sS][iI][qQ][qQ]|
-            [iT][kK][cC][aA]
-        )
-        \s{0,}1[zZ]{2}
-    )|
-    (?:  # British Overseas Territories in zip-code format
-        (KY[0-9]|MSR|VG|AI)[ -]{0,}[0-9]{4}
-    )|
-    # (?:  # Bermuda including this causes too many false positives, so excluded for now
-    #     [a-zA-Z]{2}\s{0,}[0-9]{2}
-    # )|
-    (?:  # British Forces Post Office
-        [Bb][Ff][Pp][Oo]\s{0,}[0-9]{1,4}
-    )|
     (?:  # Mainland British postcodes
         (?:
             (?:[Ww][Cc][0-9][abehmnprvwxyABEHMNPRVWXY])|
