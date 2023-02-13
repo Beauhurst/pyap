@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
     pyap.address
     ~~~~~~~~~~~~~~~~
@@ -10,18 +8,21 @@
     :copyright: (c) 2015 by Vladimir Goncharov.
     :license: MIT, see LICENSE for more details.
 """
+from typing import Any, Dict
 
-from .packages import six
 
+class Address:
+    full_address: str
+    state: str
+    city: str
+    street: str
 
-class Address(object):
-
-    def __init__(self, **args):
+    def __init__(self, **args: Any):
         keys = []
         vals = []
-        for k, v in six.iteritems(args):
+        for k, v in args.items():
             if v and isinstance(v, str):
-                v = v.strip(' ,;:')
+                v = v.strip(" ,;:")
             # create object variables
             setattr(self, k, v)
             # prepare for dict
@@ -29,17 +30,16 @@ class Address(object):
             vals.append(v)
         self.data_as_dict = dict(zip(keys, vals))
 
-    def as_dict(self):
+    def as_dict(self) -> Dict[str, str]:
         # Return parsed address parts as a dictionary
         return self.data_as_dict
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         # Address object is represented as textual address
-        address = ''
+        address = ""
         try:
             address = self.full_address
         except AttributeError:
             pass
-        if six.PY2:
-            address = address.encode('utf-8')
+
         return address

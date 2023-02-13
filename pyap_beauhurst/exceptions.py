@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
     pyap.exceptions
     ~~~~~~~~~~~~~~~~
@@ -16,14 +14,16 @@ class AddressParserException(Exception):
 
 
 class NoCountrySelected(AddressParserException):
-    ''' No country selected during module initialization '''
-    def __init__(self, message, errors):
-        super(NoCountrySelected, self).__init__(message)
+    """No country selected during module initialization"""
+
+    def __init__(self, message: str, errors: str):
+        super().__init__(message)
         self.errors = errors
 
 
 class CountryDetectionMissing(AddressParserException):
-    ''' Country-specific address detection rules were not found '''
-    def __init__(self, message, errors):
-        super(CountryDetectionMissing, self).__init__(message)
+    """Country-specific address detection rules were not found"""
+
+    def __init__(self, message: str, errors: str):
+        super().__init__(message)
         self.errors = errors

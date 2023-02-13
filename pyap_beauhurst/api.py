@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
     pyap.api
     ~~~~~~~~~~~~~~~~
@@ -9,11 +7,14 @@
     :copyright: (c) 2015 by Vladimir Goncharov.
     :license: MIT, see LICENSE for more details.
 """
+from typing import Any, List, Optional
+
+from pyap_beauhurst.address import Address
 
 from . import parser
 
 
-def parse(some_text, **kwargs):
+def parse(some_text: str, **kwargs: Any) -> List[Optional[Address]]:
     """Creates request to AddressParser
     and returns list of Address objects
     """
