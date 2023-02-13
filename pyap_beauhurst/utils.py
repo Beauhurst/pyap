@@ -14,9 +14,7 @@ from typing import List, Optional
 DEFAULT_FLAGS = re.VERBOSE | re.UNICODE
 
 
-def match(
-    regex: str, string: str, flags: RegexFlag = DEFAULT_FLAGS
-) -> Optional[Match]:
+def match(regex: str, string: str, flags: RegexFlag = DEFAULT_FLAGS) -> Optional[Match]:
     """Utility function for re.match"""
     return re.match(regex, string, flags=flags)
 
@@ -28,8 +26,6 @@ def findall(
     return re.findall(regex, string, flags=flags)
 
 
-def finditer(
-    regex: str, string: str, flags: RegexFlag = DEFAULT_FLAGS
-) -> List[Match]:
+def finditer(regex: str, string: str, flags: RegexFlag = DEFAULT_FLAGS) -> List[Match]:
     """Utility function for re.finditer"""
     return list(re.finditer(regex, string, flags=flags))
