@@ -11,8 +11,8 @@
     :copyright: (c) 2015 by Vladimir Goncharov.
     :license: MIT, see LICENSE for more details.
 """
-
 import string
+from typing import List
 
 """Numerals from one to nine
 Note: here and below we use syntax like '[Oo][Nn][Ee]'
@@ -21,42 +21,42 @@ Python Regexps don't seem to support turning On/Off
 case modes for subcapturing groups.
 """
 zero_to_nine = r"""(?:
-    [Zz][Ee][Rr][Oo]\ |[Oo][Nn][Ee]\ |[Tt][Ww][Oo]\ |
-    [Tt][Hh][Rr][Ee][Ee]\ |[Ff][Oo][Uu][Rr]\ |
-    [Ff][Ii][Vv][Ee]\ |[Ss][Ii][Xx]\ |
-    [Ss][Ee][Vv][Ee][Nn]\ |[Ee][Ii][Gg][Hh][Tt]\ |
-    [Nn][Ii][Nn][Ee]\ |[Tt][Ee][Nn]\ |
-    [Ee][Ll][Ee][Vv][Ee][Nn]\ |
-    [Tt][Ww][Ee][Ll][Vv][Ee]\ |
-    [Tt][Hh][Ii][Rr][Tt][Ee][Ee][Nn]\ |
-    [Ff][Oo][Uu][Rr][Tt][Ee][Ee][Nn]\ |
-    [Ff][Ii][Ff][Tt][Ee][Ee][Nn]\ |
-    [Ss][Ii][Xx][Tt][Ee][Ee][Nn]\ |
-    [Ss][Ee][Vv][Ee][Nn][Tt][Ee][Ee][Nn]\ |
-    [Ee][Ii][Gg][Hh][Tt][Ee][Ee][Nn]\ |
-    [Nn][Ii][Nn][Ee][Tt][Ee][Ee][Nn]\ 
+    [Zz][Ee][Rr][Oo]\s|[Oo][Nn][Ee]\s|[Tt][Ww][Oo]\s|
+    [Tt][Hh][Rr][Ee][Ee]\s|[Ff][Oo][Uu][Rr]\s|
+    [Ff][Ii][Vv][Ee]\s|[Ss][Ii][Xx]\s|
+    [Ss][Ee][Vv][Ee][Nn]\s|[Ee][Ii][Gg][Hh][Tt]\s|
+    [Nn][Ii][Nn][Ee]\s|[Tt][Ee][Nn]\s|
+    [Ee][Ll][Ee][Vv][Ee][Nn]\s|
+    [Tt][Ww][Ee][Ll][Vv][Ee]\s|
+    [Tt][Hh][Ii][Rr][Tt][Ee][Ee][Nn]\s|
+    [Ff][Oo][Uu][Rr][Tt][Ee][Ee][Nn]\s|
+    [Ff][Ii][Ff][Tt][Ee][Ee][Nn]\s|
+    [Ss][Ii][Xx][Tt][Ee][Ee][Nn]\s|
+    [Ss][Ee][Vv][Ee][Nn][Tt][Ee][Ee][Nn]\s|
+    [Ee][Ii][Gg][Hh][Tt][Ee][Ee][Nn]\s|
+    [Nn][Ii][Nn][Ee][Tt][Ee][Ee][Nn]\s
     )"""
 
 # Numerals - 10, 20, 30 ... 90
 ten_to_ninety = r"""(?:
-    [Tt][Ee][Nn]\ |[Tt][Ww][Ee][Nn][Tt][Yy]\ |
-    [Tt][Hh][Ii][Rr][Tt][Yy]\ |
-    [Ff][Oo][Rr][Tt][Yy]\ |
-    [Ff][Oo][Uu][Rr][Tt][Yy]\ |
-    [Ff][Ii][Ff][Tt][Yy]\ |[Ss][Ii][Xx][Tt][Yy]\ |
-    [Ss][Ee][Vv][Ee][Nn][Tt][Yy]\ |
-    [Ee][Ii][Gg][Hh][Tt][Yy]\ |
-    [Nn][Ii][Nn][Ee][Tt][Yy]\ 
+    [Tt][Ee][Nn]\s|[Tt][Ww][Ee][Nn][Tt][Yy]\s|
+    [Tt][Hh][Ii][Rr][Tt][Yy]\s|
+    [Ff][Oo][Rr][Tt][Yy]\s|
+    [Ff][Oo][Uu][Rr][Tt][Yy]\s|
+    [Ff][Ii][Ff][Tt][Yy]\s|[Ss][Ii][Xx][Tt][Yy]\s|
+    [Ss][Ee][Vv][Ee][Nn][Tt][Yy]\s|
+    [Ee][Ii][Gg][Hh][Tt][Yy]\s|
+    [Nn][Ii][Nn][Ee][Tt][Yy]\s
     )"""
 
 # One hundred
 hundred = r"""(?:
-    [Hh][Uu][Nn][Dd][Rr][Ee][Dd]\ 
+    [Hh][Uu][Nn][Dd][Rr][Ee][Dd]\s
     )"""
 
 # One thousand
 thousand = r"""(?:
-    [Tt][Hh][Oo][Uu][Ss][Aa][Nn][Dd]\ 
+    [Tt][Hh][Oo][Uu][Ss][Aa][Nn][Dd]\s
     )"""
 
 """
@@ -70,7 +70,7 @@ Street number can be written 2 ways:
 """
 street_number = r"""(?P<street_number>
                         (?:
-                            [Aa][Nn][Dd]\ 
+                            [Aa][Nn][Dd]\s
                             |
                             {thousand}
                             |
@@ -82,7 +82,7 @@ street_number = r"""(?P<street_number>
                         ){from_to}
                         |
                         (?:\d{from_to}
-                            (?:\ ?\-?\ ?\d{from_to})?\ 
+                            (?:\s?\-?\s?\d{from_to})?\s
                         )
                     )
                 """.format(
@@ -99,7 +99,7 @@ In example below:
 "Hoover Boulevard": "Hoover" is a street name
 """
 street_name = r"""(?P<street_name>
-                  [a-zA-Z0-9\ \.]{3,31}  # Seems like the longest US street is
+                  [a-zA-Z0-9\s\.]{3,31}  # Seems like the longest US street is
                                          # 'Northeast Kentucky Industrial Parkway'
                                          # https://atkinsbookshelf.wordpress.com/tag/longest-street-name-in-us/
                  )
@@ -108,18 +108,18 @@ street_name = r"""(?P<street_name>
 post_direction = r"""
                     (?P<post_direction>
                         (?:
-                            [Nn][Oo][Rr][Tt][Hh]\ |
-                            [Ss][Oo][Uu][Tt][Hh]\ |
-                            [Ee][Aa][Ss][Tt]\ |
-                            [Ww][Ee][Ss][Tt]\ 
+                            [Nn][Oo][Rr][Tt][Hh]\s|
+                            [Ss][Oo][Uu][Tt][Hh]\s|
+                            [Ee][Aa][Ss][Tt]\s|
+                            [Ww][Ee][Ss][Tt]\s
                         )
                         |
                         (?:
-                            NW\ |NE\ |SW\ |SE\ 
+                            NW\s|NE\s|SW\s|SE\s
                         )
                         |
                         (?:
-                            N\.?\ |S\.?\ |E\.?\ |W\.?\ 
+                            N\.?\s|S\.?\s|E\.?\s|W\.?\s
                         )
                     )
                 """
@@ -681,9 +681,9 @@ street_type_list = [
 ]
 
 
-def street_type_list_to_regex(street_type_list):
+def street_type_list_to_regex(list_of_street_types: List[str]) -> str:
     """Converts a list of street types into a regex"""
-    street_types = "|".join(set(street_type_list)).lower()
+    street_types = "|".join(set(list_of_street_types)).lower()
     for letter in string.ascii_lowercase:
         street_types = street_types.replace(letter, f"[{letter.upper()}{letter}]")
 
@@ -692,7 +692,7 @@ def street_type_list_to_regex(street_type_list):
     street_types = street_types.replace("|", r"\b{div}|\b")
     street_types = r"\b" + street_types + r"\b{div}"
     return street_types.format(
-        div=r"[\.\ ,]{0,2}",
+        div=r"[\.\s,]{0,2}",
     )
 
 
@@ -703,8 +703,8 @@ street_type = r"""
                     {street_types}
                 )
                 (?P<route_id>
-                    [\(\ \,]{route_symbols}
-                    [Rr][Oo][Uu][Tt][Ee]\ [A-Za-z0-9]+[\)\ \,]{route_symbols}
+                    [\(\s\,]{route_symbols}
+                    [Rr][Oo][Uu][Tt][Ee]\s[A-Za-z0-9]+[\)\s\,]{route_symbols}
                 )?
             )
 """.format(
@@ -715,11 +715,11 @@ street_type = r"""
 floor = r"""
             (?P<floor>
                 (?:
-                \d+[A-Za-z]{0,2}\.?\ [Ff][Ll][Oo][Oo][Rr]\ 
+                \d+[A-Za-z]{0,2}\.?\s[Ff][Ll][Oo][Oo][Rr]\s
                 )
                 |
                 (?:
-                    [Ff][Ll][Oo][Oo][Rr]\ \d+[A-Za-z]{0,2}\ 
+                    [Ff][Ll][Oo][Oo][Rr]\s\d+[A-Za-z]{0,2}\s
                 )
             )
         """
@@ -731,10 +731,10 @@ building = r"""
                     |
                     (?:[Bb][Ll][Dd][Gg])
                 )
-                \ 
+                \s
                 (?:
                     (?:
-                        [Aa][Nn][Dd]\ 
+                        [Aa][Nn][Dd]\s
                         |
                         {thousand}
                         |
@@ -747,7 +747,7 @@ building = r"""
                     |
                     \d{{0,4}}[A-Za-z]?
                 )
-                \ ?
+                \s?
             )
             """.format(
     thousand=thousand,
@@ -762,13 +762,13 @@ occupancy = r"""
                     (?:
                         (?:
                             # Suite
-                            [Ss][Uu][Ii][Tt][Ee]\ |[Ss][Tt][Ee]\.?\ 
+                            [Ss][Uu][Ii][Tt][Ee]\s|[Ss][Tt][Ee]\.?\s
                             |
                             # Apartment
-                            [Aa][Pp][Tt]\.?\ |[Aa][Pp][Aa][Rr][Tt][Mm][Ee][Nn][Tt]\ 
+                            [Aa][Pp][Tt]\.?\s|[Aa][Pp][Aa][Rr][Tt][Mm][Ee][Nn][Tt]\s
                             |
                             # Room
-                            [Rr][Oo][Oo][Mm]\ |[Rr][Mm]\.?\ 
+                            [Rr][Oo][Oo][Mm]\s|[Rr][Mm]\.?\s
                         )
                         (?:
                             [A-Za-z\#\&\-\d]{1,7}
@@ -778,13 +778,13 @@ occupancy = r"""
                     (?:
                         \#[0-9]{,3}[A-Za-z]{1}
                     )
-                )\ ?
+                )\s?
             )
             """
 
 po_box = r"""
             (?:
-                [Pp]\.?\ ?[Oo]\.?\ [Bb][Oo][Xx]\ \d+
+                [Pp]\.?\s?[Oo]\.?\s[Bb][Oo][Xx]\s\d+
             )
         """
 
@@ -792,12 +792,12 @@ full_street = r"""
     (?:
         (?P<full_street>
             {street_number}
-            {street_name}?\,?\ ?
-            (?:[\ \,]{street_type})\,?\ ?
-            {post_direction}?\,?\ ?
-            {floor}?\,?\ ?
-            {building}?\,?\ ?
-            {occupancy}?\,?\ ?
+            {street_name}?\,?\s?
+            (?:[\s\,]{street_type})\,?\s?
+            {post_direction}?\,?\s?
+            {floor}?\,?\s?
+            {building}?\,?\s?
+            {occupancy}?\,?\s?
             {po_box}?
         )
     )""".format(
@@ -833,7 +833,7 @@ region1 = r"""
                 [Cc][Oo][Ll][Oo][Rr][Aa][Dd][Oo]|
                 [Cc][Oo][Nn][Nn][Ee][Cc][Tt][Ii][Cc][Uu][Tt]|
                 [Dd][Ee][Ll][Aa][Ww][Aa][Rr][Ee]|
-                [Dd][Ii][Ss][Tt][Rr][Ii][Cc][Tt]\ [Oo][Ff]\ 
+                [Dd][Ii][Ss][Tt][Rr][Ii][Cc][Tt]\s[Oo][Ff]\s
                 [Cc][Oo][Ll][Uu][Mm][Bb][Ii][Aa]|
                 [Ff][Ll][Oo][Rr][Ii][Dd][Aa]|
                 [Gg][Ee][Oo][Rr][Gg][Ii][Aa]|
@@ -855,35 +855,35 @@ region1 = r"""
                 [Mm][Oo][Nn][Tt][Aa][Nn][Aa]|
                 [Nn][Ee][Bb][Rr][Aa][Ss][Kk][Aa]|
                 [Nn][Ee][Vv][Aa][Dd][Aa]|
-                [Nn][Ee][Ww]\ [Hh][Aa][Mm][Pp][Ss][Hh][Ii][Rr][Ee]|
-                [Nn][Ee][Ww]\ [Jj][Ee][Rr][Ss][Ee][Yy]|
-                [Nn][Ee][Ww]\ [Mm][Ee][Xx][Ii][Cc][Oo]|
-                [Nn][Ee][Ww]\ [Yy][Oo][Rr][Kk]|
-                [Nn][Oo][Rr][Tt][Hh]\ [Cc][Aa][Rr][Oo][Ll][Ii][Nn][Aa]|
-                [Nn][Oo][Rr][Tt][Hh]\ [Dd][Aa][Kk][Oo][Tt][Aa]|
+                [Nn][Ee][Ww]\s[Hh][Aa][Mm][Pp][Ss][Hh][Ii][Rr][Ee]|
+                [Nn][Ee][Ww]\s[Jj][Ee][Rr][Ss][Ee][Yy]|
+                [Nn][Ee][Ww]\s[Mm][Ee][Xx][Ii][Cc][Oo]|
+                [Nn][Ee][Ww]\s[Yy][Oo][Rr][Kk]|
+                [Nn][Oo][Rr][Tt][Hh]\s[Cc][Aa][Rr][Oo][Ll][Ii][Nn][Aa]|
+                [Nn][Oo][Rr][Tt][Hh]\s[Dd][Aa][Kk][Oo][Tt][Aa]|
                 [Oo][Hh][Ii][Oo]|
                 [Oo][Kk][Ll][Aa][Hh][Oo][Mm][Aa]|
                 [Oo][Rr][Ee][Gg][Oo][Nn]|
                 [Pp][Ee][Nn][Nn][Ss][Yy][Ll][Vv][Aa][Nn][Ii][Aa]|
-                [Rr][Hh][Oo][Dd][Ee]\ [Ii][Ss][Ll][Aa][Nn][Dd]|
-                [Ss][Oo][Uu][Tt][Hh]\ [Cc][Aa][Rr][Oo][Ll][Ii][Nn][Aa]|
-                [Ss][Oo][Uu][Tt][Hh]\ [Dd][Aa][Kk][Oo][Tt][Aa]|
+                [Rr][Hh][Oo][Dd][Ee]\s[Ii][Ss][Ll][Aa][Nn][Dd]|
+                [Ss][Oo][Uu][Tt][Hh]\s[Cc][Aa][Rr][Oo][Ll][Ii][Nn][Aa]|
+                [Ss][Oo][Uu][Tt][Hh]\s[Dd][Aa][Kk][Oo][Tt][Aa]|
                 [Tt][Ee][Nn][Nn][Ee][Ss][Ss][Ee][Ee]|
                 [Tt][Ee][Xx][Aa][Ss]|
                 [Uu][Tt][Aa][Hh]|
                 [Vv][Ee][Rr][Mm][Oo][Nn][Tt]|
                 [Vv][Ii][Rr][Gg][Ii][Nn][Ii][Aa]|
                 [Ww][Aa][Ss][Hh][Ii][Nn][Gg][Tt][Oo][Nn]|
-                [Ww][Ee][Ss][Tt]\ [Vv][Ii][Rr][Gg][Ii][Nn][Ii][Aa]|
+                [Ww][Ee][Ss][Tt]\s[Vv][Ii][Rr][Gg][Ii][Nn][Ii][Aa]|
                 [Ww][Ii][Ss][Cc][Oo][Nn][Ss][Ii][Nn]|
                 [Ww][Yy][Oo][Mm][Ii][Nn][Gg]|
                 # unincorporated & commonwealth territories
-                [Aa][Mm][Ee][Rr][Ii][Cc][Aa][Nn]\ [Ss][Aa][Mm][Oo][Aa]
+                [Aa][Mm][Ee][Rr][Ii][Cc][Aa][Nn]\s[Ss][Aa][Mm][Oo][Aa]
                 |[Gg][Uu][Aa][Mm]|
-                [Nn][Oo][Rr][Tt][Hh][Ee][Rr][Nn]\ [Mm][Aa][Rr][Ii][Aa][Nn][Aa]\ 
+                [Nn][Oo][Rr][Tt][Hh][Ee][Rr][Nn]\s[Mm][Aa][Rr][Ii][Aa][Nn][Aa]\s
                 [Ii][Ss][Ll][Aa][Nn][Dd][Ss]|
-                [Pp][Uu][Ee][Rr][Tt][Oo]\ [Rr][Ii][Cc][Oo]|
-                [Vv][Ii][Rr][Gg][Ii][Nn]\ [Ii][Ss][Ll][Aa][Nn][Dd][Ss]
+                [Pp][Uu][Ee][Rr][Tt][Oo]\s[Rr][Ii][Cc][Oo]|
+                [Vv][Ii][Rr][Gg][Ii][Nn]\s[Ii][Ss][Ll][Aa][Nn][Dd][Ss]
             )
         )
         """
@@ -891,7 +891,7 @@ region1 = r"""
 # TODO: doesn't catch cities containing French characters
 city = r"""
         (?P<city>
-            [A-Za-z]{1}[a-zA-Z\ \-\'\.]{2,20}
+            [A-Za-z]{1}[a-zA-Z\s\-\'\.]{2,20}
         )
         """
 
@@ -904,7 +904,7 @@ postal_code = r"""
 country = r"""
             (?:
                 [Uu]\.?[Ss]\.?[Aa]\.?|
-                [Uu][Nn][Ii][Tt][Ee][Dd]\ [Ss][Tt][Aa][Tt][Ee][Ss](?:\ [Oo][Ff]\ [Aa][Mm][Ee][Rr][Ii][Cc][Aa])?
+                [Uu][Nn][Ii][Tt][Ee][Dd]\s[Ss][Tt][Aa][Tt][Ee][Ss](?:\s[Oo][Ff]\s[Aa][Mm][Ee][Rr][Ii][Cc][Aa])?
             )
             """
 
@@ -914,7 +914,7 @@ full_address = r"""
                     {city} {div}
                     {region1} {div}
                     (?:
-                        (?:{postal_code}?(\ ?,?{country})?)
+                        (?:{postal_code}?(\s?,?{country})?)
                     )
                 )
                 """.format(

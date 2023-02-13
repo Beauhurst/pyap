@@ -16,7 +16,7 @@ class AddressParserException(Exception):
 class NoCountrySelected(AddressParserException):
     """No country selected during module initialization"""
 
-    def __init__(self, message, errors):
+    def __init__(self, message: str, errors: str):
         super().__init__(message)
         self.errors = errors
 
@@ -24,6 +24,6 @@ class NoCountrySelected(AddressParserException):
 class CountryDetectionMissing(AddressParserException):
     """Country-specific address detection rules were not found"""
 
-    def __init__(self, message, errors):
+    def __init__(self, message: str, errors: str):
         super().__init__(message)
         self.errors = errors
