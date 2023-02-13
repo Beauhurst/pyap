@@ -4,12 +4,12 @@ from pyap_beauhurst import utils
 
 
 def execute_matching_test(
-    input_data: str, match_expectation: bool, pattern: str
+    input_data: str, is_match_expected: bool, pattern: str
 ) -> None:
     match = utils.match(pattern, input_data, re.VERBOSE)
     is_found = match is not None
-    if match_expectation:
-        assert is_found == match_expectation
+    if is_match_expected:
+        assert is_found == is_match_expected
         if isinstance(match, re.Match):
             assert match.group(0) == input_data
     else:
@@ -18,4 +18,4 @@ def execute_matching_test(
         - our match should be partial if regex matches some part of string
         """
         if match:
-            assert (is_found == match_expectation) or (match.group(0) != input_data)
+            assert (is_found == is_match_expected) or (match.group(0) != input_data)
