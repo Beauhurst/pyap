@@ -9,14 +9,14 @@
 """
 from typing import Any, List, Optional
 
-import pyap_beauhurst.address
+from pyap_beauhurst.address import Address
 
 from . import parser
 
 
 def parse(
     some_text: str, **kwargs: Any
-) -> List[Optional[pyap_beauhurst.address.Address]]:
+) -> List[Optional[Address]]:
     """Creates request to AddressParser
     and returns list of Address objects
     """

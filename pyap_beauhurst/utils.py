@@ -8,7 +8,7 @@ This module provides some utility functions.
 :license: MIT, see LICENSE for more details.
 """
 import re
-from re import RegexFlag
+from re import Match, RegexFlag
 from typing import List, Optional
 
 DEFAULT_FLAGS = re.VERBOSE | re.UNICODE
@@ -16,20 +16,20 @@ DEFAULT_FLAGS = re.VERBOSE | re.UNICODE
 
 def match(
     regex: str, string: str, flags: RegexFlag = DEFAULT_FLAGS
-) -> Optional[re.Match]:
+) -> Optional[Match]:
     """Utility function for re.match"""
     return re.match(regex, string, flags=flags)
 
 
 def findall(
     regex: str, string: str, flags: RegexFlag = DEFAULT_FLAGS
-) -> List[Optional[re.Match]]:
+) -> List[Optional[Match]]:
     """Utility function for re.findall"""
     return re.findall(regex, string, flags=flags)
 
 
 def finditer(
     regex: str, string: str, flags: RegexFlag = DEFAULT_FLAGS
-) -> List[re.Match]:
+) -> List[Match]:
     """Utility function for re.finditer"""
     return list(re.finditer(regex, string, flags=flags))
