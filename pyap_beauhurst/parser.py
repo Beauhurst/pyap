@@ -16,9 +16,9 @@ from . import address, exceptions as e, utils
 
 
 class AddressParser:
-    def __init__(self, **args):
+    def __init__(self, **kwargs):
         """Initialize with custom arguments"""
-        for k, v in args.items():
+        for k, v in kwargs.items():
             # store country id in uppercase
             if k == "country":
                 v = v.upper()
