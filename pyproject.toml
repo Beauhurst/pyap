@@ -13,29 +13,28 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3 :: Only",
 ]
 readme="README.rst"
 
 [tool.poetry.dependencies]
 python = "^3.7.1"
-pandas = "^1.2"
-ruff = "^0.0.239"
-requests = "^2.28.2"
 
 [tool.poetry.dev-dependencies]
 black = ">=21.5b1,<24"
+ipython = ">=7.0,<9.0"
 mypy = ">=0.901,<1"
 pytest = ">=6.2.4,<8"
 pytest-cov = ">=2.12.1,<4.1"
 pytest-mock = ">=3.6.1,<3.11"
-types-requests = "^2.28"
-ipython = ">=7.0,<9.0"
+requests = "^2.28.2"
+ruff = "^0.0.239"
+types-requests = ">=2.28,<3"
 
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
-
 
 [tool.ruff]
 target-version = "py37"
@@ -64,10 +63,6 @@ disallow_untyped_defs = true
 show_error_codes = true
 warn_redundant_casts = true
 warn_unused_configs = true
-
-[[tool.mypy.overrides]]
-module = "pandas.*"
-ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"

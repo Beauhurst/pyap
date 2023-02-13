@@ -20,10 +20,10 @@ class AddressParser:
     country: str
     clean_text: str
 
-    def __init__(self, **args: Any):
+    def __init__(self, **kwargs: Any):
         """Initialize with custom arguments"""
 
-        for k, v in args.items():
+        for k, v in kwargs.items():
             # store country id in uppercase
             if k == "country":
                 v = v.upper()
