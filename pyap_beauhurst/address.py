@@ -12,10 +12,23 @@ from typing import Any, Dict
 
 
 class Address:
-    full_address: str
-    state: str
+    building_id: str
     city: str
-    street: str
+    country: str
+    country_id: str
+    floor: str
+    full_address: str
+    full_street: str
+    match_end: str
+    match_start: str
+    occupancy: str
+    postal_code: str
+    region1: str
+    route_id: str
+    street_name: str
+    street_number: str
+    street_type: str
+
 
     def __init__(self, **args: Any):
         keys = []
