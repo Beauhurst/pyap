@@ -8,7 +8,7 @@ ruff check .
 black --check .
 
 # mypy
-mypy .
+mypy -m pyap_beauhurst
 
 # pytest
 pytest .
