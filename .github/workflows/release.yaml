@@ -39,7 +39,7 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           generateReleaseNotes: true
-          artifacts: "./dist/pyap-beahurst-${{ steps.tag_version.outputs.new_version }}.tar.gz,./dist/pyap-beahurst-${{ steps.tag_version.outputs.new_version }}-py3-none-any.whl"
+          artifacts: "./dist/pyap_beauhurst-${{ steps.tag_version.outputs.new_version }}.tar.gz,./dist/pyap_beauhurst-${{ steps.tag_version.outputs.new_version }}-py3-none-any.whl"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Latest tag
