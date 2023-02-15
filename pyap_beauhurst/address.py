@@ -25,10 +25,11 @@ class Address:
     postal_code: str
     region1: str
     route_id: str
+    state: str
+    street: str
     street_name: str
     street_number: str
     street_type: str
-
 
     def __init__(self, **args: Any):
         keys = []
