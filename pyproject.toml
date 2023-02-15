@@ -21,15 +21,16 @@ readme="README.rst"
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
-black = ">=22.2"
-ipython = ">=7.0"
-mypy = ">=0.901"
-pytest = ">=6.2.4"
-pytest-cov = ">=2.12.1"
-pytest-mock = ">=3.6.1"
-requests = ">=2.28.2"
-ruff = ">=0.0.239"
-types-requests = ">=2.28"
+black = "^22.2"
+ipython = "^7.0"
+mypy = "^0.901"
+pydantic = "^1.10.4"
+pytest = "^6.2.4"
+pytest-cov = "^2.12.1"
+pytest-mock = "^3.6.1"
+requests = "^2.28.2"
+ruff = "^0.0.239"
+types-requests = "^2.28"
 
 [build-system]
 requires = ["poetry>=0.12"]
