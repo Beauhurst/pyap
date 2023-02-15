@@ -8,7 +8,7 @@
     :copyright: (c) 2015 by Vladimir Goncharov.
     :license: MIT, see LICENSE for more details.
 """
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel, validator
 
@@ -39,10 +39,6 @@ class Address(BaseModel):
             return v.strip(" ,;:")
         if v:
             return v
-
-    def as_dict(self) -> Dict[str, str]:
-        # Return parsed address parts as a dictionary
-        return self.dict()
 
     def __str__(self) -> str:
         # Address object is represented as textual address

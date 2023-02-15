@@ -20,7 +20,7 @@ detecting and parsing addresses. Currently it supports US 🇺🇸, Canadian �
             # shows found address
             print(address)
             # shows address parts
-            print(address.as_dict())
+            print(address.dict())
     ...
 
 
