@@ -594,7 +594,7 @@ def test_full_address_parts() -> None:
                     if k == "full_address":
                         initial_parsed = parsed[0]
                         assert isinstance(initial_parsed, Address)
-                        if initial_parsed.as_dict().get("full_address"):
+                        if initial_parsed.dict().get("full_address"):
                             assert (
                                 initial_parsed.full_address
                                 == pyap_beauhurst.parser.AddressParser._normalize_string(
