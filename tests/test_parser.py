@@ -32,10 +32,24 @@ def test_address_class_init() -> None:
     assert addr.street == "Street 1b"
 
     assert addr.as_dict() == {
-        "state": "USA",
+        "building_id": None,
         "city": "CityVille",
-        "street": "Street 1b",
+        "country": None,
+        "country_id": None,
+        "floor": None,
         "full_address": "Street 1b CityVille USA",
+        "full_street": None,
+        "match_end": None,
+        "match_start": None,
+        "occupancy": None,
+        "postal_code": None,
+        "region1": None,
+        "route_id": None,
+        "state": "USA",
+        "street": "Street 1b",
+        "street_name": None,
+        "street_number": None,
+        "street_type": None,
     }
 
     assert str(addr) == "Street 1b CityVille USA"
