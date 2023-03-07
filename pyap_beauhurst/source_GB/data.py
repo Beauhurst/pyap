@@ -353,14 +353,14 @@ postal_code = r"""
 (?P<postal_code>
     (?:  # Mainland British postcodes
         (?:
-            (?:[Ww][Cc][0-9][abehmnprvwxyABEHMNPRVWXY])|
-            (?:[Ee][Cc][1-4][abehmnprvwxyABEHMNPRVWXY])|
-            (?:[Nn][Ww]1[Ww])|
-            (?:[Ss][Ee]1[Pp])|
-            (?:[Ss][Ww]1[abehmnprvwxyABEHMNPRVWXY])|
-            (?:[EeNnWw]1[a-hjkpstuwA-HJKPSTUW])|
-            (?:[BbEeGgLlMmNnSsWw][0-9][0-9]?)|
-            (?:[a-pr-uwyzA-PR-UWYZ][a-hk-yxA-HK-XY][0-9][0-9]?)
+            (?:\b[Ww][Cc][0-9][abehmnprvwxyABEHMNPRVWXY])|
+            (?:\b[Ee][Cc][1-4][abehmnprvwxyABEHMNPRVWXY])|
+            (?:\b[Nn][Ww]1[Ww])|
+            (?:\b[Ss][Ee]1[Pp])|
+            (?:\b[Ss][Ww]1[abehmnprvwxyABEHMNPRVWXY])|
+            (?:\b[EeNnWw]1[a-hjkpstuwA-HJKPSTUW])|
+            (?:\b[BbEeGgLlMmNnSsWw][0-9][0-9]?)|
+            (?:\b[a-pr-uwyzA-PR-UWYZ][a-hk-yxA-HK-XY][0-9][0-9]?)
         )
         \s{0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}
     )
