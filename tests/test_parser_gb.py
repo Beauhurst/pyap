@@ -8,7 +8,7 @@ from io import TextIOWrapper
 import pytest
 import requests
 
-import pyap_beauhurst
+import pyap_beauhurst as pyap
 import pyap_beauhurst.source_GB.data as data_gb
 from pyap_beauhurst.address import Address
 from test_utils import execute_matching_test
@@ -427,6 +427,23 @@ def test_postal_code(input_data: str, is_match_expected: bool) -> None:
     execute_matching_test(input_data, is_match_expected, data_gb.postal_code)
 
 
+@pytest.mark.parametrize(
+    ("input_data", "expected_postcode"),
+    [
+        ("24 Moorfield Road, IIkley, West Yorkshire LS29 8BL, UK", "LS29 8BL"),
+        ("71 Wilson Avenue Rochester Kent ME1 2SJ", "ME1 2SJ"),
+        ("3 Dyer Street, Cirencester GL7 2PP", "GL7 2PP"),
+    ],
+)
+def test_postcodes_with_valid_postcode_as_substring(
+    input_data: str, expected_postcode: str
+) -> None:
+    """
+    Some Postcodes can be incorrectly matched to substring postcodes (like LS9 matching S9)
+    """
+    assert pyap.parse(input_data, country="GB")[0].postal_code == expected_postcode
+
+
 def test_postal_code_extensive() -> None:
     """Test post code regex against a list of all post codes."""
     zip_location = ".." / pathlib.Path(__file__).parent / "code_point_uk_post_codes.zip"
@@ -586,8 +603,8 @@ def test_full_address_parts() -> None:
                     + filler_text_after
                 )
 
-                parsed = pyap_beauhurst.parse(address_text, country="GB")
-                print(pyap_beauhurst.AddressParser._normalize_string(address_text))
+                parsed = pyap.parse(address_text, country="GB")
+                print(pyap.AddressParser._normalize_string(address_text))
                 # Ensure that only one address is found
                 assert len(parsed) == 1
                 for k, v in address_parts.items():
@@ -597,9 +614,7 @@ def test_full_address_parts() -> None:
                         if initial_parsed.dict().get("full_address"):
                             assert (
                                 initial_parsed.full_address
-                                == pyap_beauhurst.parser.AddressParser._normalize_string(
-                                    v
-                                )
+                                == pyap.parser.AddressParser._normalize_string(v)
                             )
                     else:
                         # assert that every item in the above address

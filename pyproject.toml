@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyap-beauhurst"
-version = "0.4.0"
+version = "0.4.1"
 description = "Pyap is an MIT Licensed text processing library, written in Python, for detecting and parsing addresses. Currently it supports USA, Canadian and British addresses. This is a fork maintained by Beauhurst."
 authors = ["Vladimir Goncharov <vladimarius@gmail.com>", "Beauhurst <dev@beauhurst.com>"]
 documentation = "https://github.com/Beauhurst/pyap"
