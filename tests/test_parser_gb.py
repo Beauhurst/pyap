@@ -435,7 +435,9 @@ def test_postal_code(input_data: str, is_match_expected: bool) -> None:
         ("3 Dyer Street, Cirencester GL7 2PP", "GL7 2PP"),
     ],
 )
-def test_postcodes_with_valid_postcode_as_substring(input_data: str, expected_postcode: str) -> None:
+def test_postcodes_with_valid_postcode_as_substring(
+    input_data: str, expected_postcode: str
+) -> None:
     """
     Some Postcodes can be incorrectly matched to substring postcodes (like LS9 matching S9)
     """
