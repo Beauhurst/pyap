@@ -5,7 +5,10 @@ description = "Pyap is an MIT Licensed text processing library, written in Pytho
 authors = ["Vladimir Goncharov <vladimarius@gmail.com>", "Beauhurst <dev@beauhurst.com>"]
 documentation = "https://github.com/Beauhurst/pyap"
 license = "MIT"
-packages=[{ include = "pyap_beauhurst" }]
+packages = [
+    { include = "pyap_beauhurst" },
+    { include = "pyap_beauhurst/py.typed" },
+]
 classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
