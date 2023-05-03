@@ -3,7 +3,9 @@ Pyap: Python address parser
 
 
 Pyap is an MIT Licensed text processing library, written in Python, for
-detecting and parsing addresses. Currently it supports US 🇺🇸, Canadian 🇨🇦 and British 🇬🇧 addresses. 
+detecting and parsing addresses. Currently it supports US 🇺🇸, Canadian 🇨🇦 and British 🇬🇧 addresses.
+
+This fork is maintained by [Beauhurst](https://github.com/Beauhurst).
 
 
 .. code-block:: python
@@ -11,7 +13,7 @@ detecting and parsing addresses. Currently it supports US 🇺🇸, Canadian �
     >>> import pyap
     >>> test_address = """
         Lorem ipsum
-        225 E. John Carpenter Freeway, 
+        225 E. John Carpenter Freeway,
         Suite 1500 Irving, Texas 75062
         Dorem sit amet
         """
@@ -33,7 +35,7 @@ To install Pyap, simply:
 
 .. code-block:: bash
 
-    $ pip install pyap
+    $ pip install pyap_beauhurst
 
 
 
@@ -78,7 +80,7 @@ In other words in order to detect US address, the library doesn't
 use any list of US cities or a list of typical street names. It
 looks for a pattern which is most likely to be an address.
 
-For example the string below would be detected as a valid address: 
+For example the string below would be detected as a valid address:
 "1 SPIRITUAL HEALER DR SHARIF NSAMBU SPECIALISING IN"
 
 It happens because this string has all the components of a valid
