@@ -48,7 +48,8 @@ pip-delete-this-directory.txt
 .tox/
 coverage.xml
 .pytest_cache/
-.mypy_cache/
+.mypy_cache
+.ruff_cache
 
 # osx crap
 .DS_Store
