@@ -41,7 +41,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.ruff]
 target-version = "py37"
-select = ["B", "C", "E", "F", "I", "PT", "Q", "UP", "W"]
+select = ["B", "COM819", "C4", "E", "F", "I", "PT", "Q", "UP", "W"]
 ignore = ["E501"]
 # Avoid trying to fix flake8-bugbear (`B`) violations.
 unfixable = ["B"]
