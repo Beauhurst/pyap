@@ -8,7 +8,7 @@
     :copyright: (c) 2015 by Vladimir Goncharov.
     :license: MIT, see LICENSE for more details.
 """
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 from pydantic import BaseModel, field_validator
 
@@ -21,8 +21,8 @@ class Address(BaseModel):
     floor: Optional[str] = None
     full_address: str
     full_street: Optional[str] = None
-    match_end: Optional[int | str] = None
-    match_start: Optional[int | str] = None
+    match_end: Optional[Union[int, str]] = None
+    match_start: Optional[Union[int, str]] = None
     occupancy: Optional[str] = None
     postal_code: Optional[str] = None
     region1: Optional[str] = None
