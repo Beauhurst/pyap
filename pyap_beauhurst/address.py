@@ -10,7 +10,7 @@
 """
 from typing import Any, Optional
 
-from pydantic import field_validator, BaseModel
+from pydantic import BaseModel, field_validator
 
 
 class Address(BaseModel):
