@@ -10,30 +10,31 @@
 """
 from typing import Any, Optional
 
-from pydantic import BaseModel, validator
+from pydantic import field_validator, BaseModel
 
 
 class Address(BaseModel):
-    building_id: Optional[str]
-    city: Optional[str]
-    country: Optional[str]
-    country_id: Optional[str]
-    floor: Optional[str]
+    building_id: Optional[str] = None
+    city: Optional[str] = None
+    country: Optional[str] = None
+    country_id: Optional[str] = None
+    floor: Optional[str] = None
     full_address: str
-    full_street: Optional[str]
-    match_end: Optional[str]
-    match_start: Optional[str]
-    occupancy: Optional[str]
-    postal_code: Optional[str]
-    region1: Optional[str]
-    route_id: Optional[str]
-    state: Optional[str]
-    street: Optional[str]
-    street_name: Optional[str]
-    street_number: Optional[str]
-    street_type: Optional[str]
+    full_street: Optional[str] = None
+    match_end: Optional[int | str] = None
+    match_start: Optional[int | str] = None
+    occupancy: Optional[str] = None
+    postal_code: Optional[str] = None
+    region1: Optional[str] = None
+    route_id: Optional[str] = None
+    state: Optional[str] = None
+    street: Optional[str] = None
+    street_name: Optional[str] = None
+    street_number: Optional[str] = None
+    street_type: Optional[str] = None
 
-    @validator("*", pre=True, allow_reuse=True)
+    @field_validator("*", mode="before")
+    @classmethod
     def strip_chars(cls, v: Any) -> Any:
         if isinstance(v, str):
             return v.strip(" ,;:")
