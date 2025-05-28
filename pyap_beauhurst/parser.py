@@ -1,17 +1,17 @@
 """
-    pyap.parser
-    ~~~~~~~~~~~~~~~~
+pyap.parser
+~~~~~~~~~~~~~~~~
 
-    This module contains AddressParser class which connects all the
-    functionality of the package in one place.
+This module contains AddressParser class which connects all the
+functionality of the package in one place.
 
-    :copyright: (c) 2015 by Vladimir Goncharov.
-    :license: MIT, see LICENSE for more details.
+:copyright: (c) 2015 by Vladimir Goncharov.
+:license: MIT, see LICENSE for more details.
 """
 
 import importlib
 import re
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, cast
 
 from . import address, exceptions as e, utils
 
@@ -41,17 +41,15 @@ class AddressParser:
 
         except ImportError:
             raise e.CountryDetectionMissing(
-                'Detection rules for country "{country}" not found.'.format(
-                    country=self.country
-                ),
+                f'Detection rules for country "{self.country}" not found.',
                 "Error 2",
             ) from None
 
-    def parse(self, text: str) -> List[Optional[address.Address]]:
+    def parse(self, text: str) -> list[address.Address | None]:
         """
         Returns a list of addresses found in text together with parsed address parts
         """
-        results: List[Optional[address.Address]] = []
+        results: list[address.Address | None] = []
         self.clean_text = self._normalize_string(text)
 
         # get addresses
@@ -59,17 +57,17 @@ class AddressParser:
 
         if address_matches:
             # append parsed address info
-            results: List[Optional[address.Address]] = list(  # type: ignore[no-redef]
+            results: list[address.Address | None] = list(  # type: ignore[no-redef]
                 map(self._parse_address, address_matches)
             )
 
         return results
 
-    def _parse_address(self, match: Union[re.Match, str]) -> Optional[address.Address]:
+    def _parse_address(self, match: re.Match | str) -> address.Address | None:
         """Parses address into parts"""
         if isinstance(match, str):
             # If the address is passed as a match it saves doing the match twice
-            match: Optional[re.Match] = utils.match(  # type: ignore[no-redef]
+            match: re.Match | None = utils.match(  # type: ignore[no-redef]
                 self.rules, match, flags=re.VERBOSE | re.U
             )
         if match:
@@ -81,14 +79,33 @@ class AddressParser:
                 cleaned_dict["match_start"] = match.start()
                 cleaned_dict["match_end"] = match.end()
                 # create object containing results
-                return address.Address(**cleaned_dict)
+                return address.Address(
+                    building_id=cast(str | None, cleaned_dict.get("building_id")),
+                    city=cast(str | None, cleaned_dict.get("city")),
+                    country=cast(str | None, cleaned_dict.get("country")),
+                    country_id=cast(str | None, cleaned_dict.get("country_id")),
+                    floor=cast(str | None, cleaned_dict.get("floor")),
+                    full_address=cast(str, cleaned_dict.get("full_address", "")),
+                    full_street=cast(str | None, cleaned_dict.get("full_street")),
+                    match_end=cleaned_dict.get("match_end"),
+                    match_start=cleaned_dict.get("match_start"),
+                    occupancy=cast(str | None, cleaned_dict.get("occupancy")),
+                    postal_code=cast(str | None, cleaned_dict.get("postal_code")),
+                    region1=cast(str | None, cleaned_dict.get("region1")),
+                    route_id=cast(str | None, cleaned_dict.get("route_id")),
+                    state=cast(str | None, cleaned_dict.get("state")),
+                    street=cast(str | None, cleaned_dict.get("street")),
+                    street_name=cast(str | None, cleaned_dict.get("street_name")),
+                    street_number=cast(str | None, cleaned_dict.get("street_number")),
+                    street_type=cast(str | None, cleaned_dict.get("street_type")),
+                )
 
         return None
 
     @staticmethod
     def _combine_results(
-        match_as_dict: Dict[str, Union[str, int, None]]
-    ) -> Dict[str, Union[str, int, None]]:
+        match_as_dict: dict[str, str | int | None],
+    ) -> dict[str, str | int | None]:
         """Combine results from different parsed parts:
         we look for non-empty results in values like
         'postal_code_b' or 'postal_code_c' and store
@@ -98,8 +115,8 @@ class AddressParser:
             becomes:
            'postal_code'  :'123456'
         """
-        keys: List[str] = []
-        vals: List[Union[str, int, None]] = []
+        keys: list[str] = []
+        vals: list[str | int | None] = []
         for k, v in match_as_dict.items():
             if k[-2:] in "_a_b_c_d_e_f_g_h_i_j_k_l_m":
                 if v:
@@ -110,7 +127,7 @@ class AddressParser:
                 if k not in keys:
                     keys.append(k)
                     vals.append(v)
-        return dict(zip(keys, vals))
+        return dict(zip(keys, vals, strict=True))
 
     @staticmethod
     def _normalize_string(text: str) -> str:

@@ -1,18 +1,18 @@
 """
-    pyap.source_US.data
-    ~~~~~~~~~~~~~~~~~~~~
+pyap.source_US.data
+~~~~~~~~~~~~~~~~~~~~
 
-    This module provides regular expression definitions required for
-    detecting US addresses.
+This module provides regular expression definitions required for
+detecting US addresses.
 
-    The module is expected to always contain 'full_address' variable containing
-    all address parsing definitions.
+The module is expected to always contain 'full_address' variable containing
+all address parsing definitions.
 
-    :copyright: (c) 2015 by Vladimir Goncharov.
-    :license: MIT, see LICENSE for more details.
+:copyright: (c) 2015 by Vladimir Goncharov.
+:license: MIT, see LICENSE for more details.
 """
+
 import string
-from typing import List
 
 """Numerals from one to nine
 Note: here and below we use syntax like '[Oo][Nn][Ee]'
@@ -681,7 +681,7 @@ street_type_list = [
 ]
 
 
-def street_type_list_to_regex(list_of_street_types: List[str]) -> str:
+def street_type_list_to_regex(list_of_street_types: list[str]) -> str:
     """Converts a list of street types into a regex"""
     street_types = "|".join(set(list_of_street_types)).lower()
     for letter in string.ascii_lowercase:
@@ -724,7 +724,7 @@ floor = r"""
             )
         """
 
-building = r"""
+building = rf"""
             (?P<building_id>
                 (?:
                     (?:[Bb][Uu][Ii][Ll][Dd][Ii][Nn][Gg])
@@ -749,12 +749,7 @@ building = r"""
                 )
                 \s?
             )
-            """.format(
-    thousand=thousand,
-    hundred=hundred,
-    zero_to_nine=zero_to_nine,
-    ten_to_ninety=ten_to_ninety,
-)
+            """
 
 occupancy = r"""
             (?P<occupancy>
@@ -788,7 +783,7 @@ po_box = r"""
             )
         """
 
-full_street = r"""
+full_street = rf"""
     (?:
         (?P<full_street>
             {street_number}
@@ -800,16 +795,7 @@ full_street = r"""
             {occupancy}?\,?\s?
             {po_box}?
         )
-    )""".format(
-    street_number=street_number,
-    street_name=street_name,
-    street_type=street_type,
-    post_direction=post_direction,
-    floor=floor,
-    building=building,
-    occupancy=occupancy,
-    po_box=po_box,
-)
+    )"""
 
 # region1 is actually a "state"
 region1 = r"""

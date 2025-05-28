@@ -1,17 +1,16 @@
 """
-    pyap.source_GB.data
-    ~~~~~~~~~~~~~~~~~~~~
+pyap.source_GB.data
+~~~~~~~~~~~~~~~~~~~~
 
-    This module provides regular expression definitions required for
-    detecting British/GB/UK addresses.
+This module provides regular expression definitions required for
+detecting British/GB/UK addresses.
 
-    The module is expected to always contain 'full_address' variable containing
-    all address parsing definitions.
+The module is expected to always contain 'full_address' variable containing
+all address parsing definitions.
 
-    :copyright: (c) 2015 by Vladimir Goncharov.
-    :license: MIT, see LICENSE for more details.
+:copyright: (c) 2015 by Vladimir Goncharov.
+:license: MIT, see LICENSE for more details.
 """
-
 
 """Numerals from one to nine
 Note: here and below we use syntax like '[Oo][Nn][Ee]'
@@ -224,7 +223,7 @@ floor = r"""
 )  # end floor
 """
 
-building = r"""
+building = rf"""
 (?P<building_id>
     (?:
         (?:[Bb][Uu][Ii][Ll][Dd][Ii][Nn][Gg])
@@ -249,14 +248,9 @@ building = r"""
     )
     \s ?
 )  # end building_id
-""".format(
-    thousand=thousand,
-    hundred=hundred,
-    zero_to_nine=zero_to_nine,
-    ten_to_ninety=ten_to_ninety,
-)
+"""
 
-occupancy = r"""
+occupancy = rf"""
 (?P<occupancy>
     (?:
         (?:
@@ -277,27 +271,23 @@ occupancy = r"""
             |
             \#
         )
-        {space}?
+        {space_pattern}?
         (?:
             [A-Za-z\#\&\-\d]{{1,7}}
         )?
     )
-    {space}?
+    {space_pattern}?
 )  # end occupancy
-""".format(
-    space=space_pattern
-)
+"""
 
-po_box = r"""
+po_box = rf"""
 (?:
-    [Pp]\.? {space}? [Oo]\.? {space}? ([Bb][Oo][Xx]{space}?)?\d+
+    [Pp]\.? {space_pattern}? [Oo]\.? {space_pattern}? ([Bb][Oo][Xx]{space_pattern}?)?\d+
 )
-""".format(
-    space=space_pattern,
-)
+"""
 
 # TODO: maybe remove the '?' on the part_dividers is mismatch address parts
-full_street = r"""
+full_street = rf"""
 (?:
     (?P<full_street>
 
@@ -315,26 +305,16 @@ full_street = r"""
         )?
 
         (?:
-            (?: {street_number} {space} )
+            (?: {street_number} {space_pattern} )
             |
             (?! \d{{}} )
 
         )?
         (?:{street_name} )
-        (?:{space} {street_type} {space}?)?
+        (?:{space_pattern} {street_type} {space_pattern}?)?
     )
 )  # end full_street
-""".format(
-    street_number=street_number,
-    street_name=street_name,
-    street_type=street_type,
-    floor=floor,
-    building=building,
-    occupancy=occupancy,
-    po_box=po_box,
-    part_divider=part_divider,
-    space=space_pattern,
-)
+"""
 
 # region1 is actually a "state"
 region1 = r"""
@@ -383,7 +363,7 @@ country = r"""
 )  # end country
 """
 
-full_address = r"""
+full_address = rf"""
 (?P<full_address>
     {full_street}
     (?: {part_divider} {city} )?
@@ -391,11 +371,4 @@ full_address = r"""
     {part_divider}? {postal_code}
     (?: {part_divider} {country} )?
 )  # end full_address
-""".format(
-    full_street=full_street,
-    part_divider=part_divider,
-    city=city,
-    region1=region1,
-    country=country,
-    postal_code=postal_code,
-)
+"""

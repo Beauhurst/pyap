@@ -1,4 +1,5 @@
-""" Test for GB address parser """
+"""Test for GB address parser"""
+
 import csv
 import itertools
 import pathlib
@@ -114,7 +115,7 @@ def test_thousand(input_data: str, is_match_expected: bool) -> None:
         ("15 ", True),
         ("44 ", True),
         ("256 ", True),
-        ("256 ", True),
+        ("226 ", True),
         ("1256 ", True),
         ("32457 ", True),
         ("32457", True),
@@ -196,8 +197,6 @@ def test_post_direction(input_data: str, is_match_expected: bool) -> None:
         # positive assertions
         ("Street", True),
         ("St.", True),
-        ("St.", True),
-        ("Blvd.", True),
         ("Blvd.", True),
         ("LN", True),
         ("RD", True),
@@ -207,11 +206,10 @@ def test_post_direction(input_data: str, is_match_expected: bool) -> None:
         ("Ct", True),
         ("Sq.", True),
         ("LP.", True),
-        ("LP.", True),
-        ("Street", True),
         ("blvd", True),
         # negative assertions
-        # TODO
+        ("Blv.", False),
+        ("Str.", False),
     ],
 )
 def test_street_type(input_data: str, is_match_expected: bool) -> None:
@@ -441,7 +439,11 @@ def test_postcodes_with_valid_postcode_as_substring(
     """
     Some Postcodes can be incorrectly matched to substring postcodes (like LS9 matching S9)
     """
-    assert pyap.parse(input_data, country="GB")[0].postal_code == expected_postcode
+    parsed_address = pyap.parse(input_data, country="GB")[0]
+    assert parsed_address
+    postcode = parsed_address.postal_code
+    assert postcode is not None
+    assert postcode == expected_postcode
 
 
 def test_postal_code_extensive() -> None:
@@ -452,7 +454,7 @@ def test_postal_code_extensive() -> None:
     if not zip_location.exists():
         url = "https://api.os.uk/downloads/v1/products/CodePointOpen/downloads?area=GB&format=CSV&redirect"
         r = requests.get(url, allow_redirects=True)
-        with open(zip_location.name, "wb") as f:
+        with pathlib.Path.open(zip_location, "wb") as f:
             f.write(r.content)
 
     # Run the detector against this list to ensure we pickup all post codes

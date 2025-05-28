@@ -1,15 +1,15 @@
 """
-    pyap.source_US.data
-    ~~~~~~~~~~~~~~~~~~~~
+pyap.source_US.data
+~~~~~~~~~~~~~~~~~~~~
 
-    This module provides regular expression definitions required for
-    detecting Canada addresses.
+This module provides regular expression definitions required for
+detecting Canada addresses.
 
-    The module is expected to always contain 'full_address' variable containing
-    all address parsing definitions.
+The module is expected to always contain 'full_address' variable containing
+all address parsing definitions.
 
-    :copyright: (c) 2015 by Vladimir Goncharov.
-    :license: MIT, see LICENSE for more details.
+:copyright: (c) 2015 by Vladimir Goncharov.
+:license: MIT, see LICENSE for more details.
 """
 
 import re
@@ -146,9 +146,7 @@ post_direction = r"""
         O\.?\s?
     )
 )
-""".format(
-    d=r"[\s,]"
-)
+""".format(d=r"[\s,]")
 
 # Regexp for matching street type
 # According to
@@ -305,9 +303,7 @@ street_type = r"""
     [\(\s\,]{route_symbols}
     [Rr][Oo][Uu][Tt][Ee]\s[A-Za-z0-9]+[\)\s\,]{route_symbols}
 )?
-""".format(
-    div=r"[\.\s,]{0,2}", route_symbols="{0,3}"
-)
+""".format(div=r"[\.\s,]{0,2}", route_symbols="{0,3}")
 
 floor = r"""
 (?P<floor>
@@ -321,7 +317,7 @@ floor = r"""
 )
 """
 
-building = r"""
+building = rf"""
 (?P<building_id>
     (?:
         (?:[Bb][Uu][Ii][Ll][Dd][Ii][Nn][Gg])
@@ -346,12 +342,7 @@ building = r"""
     )
     \s ?
 )  # end building_id
-""".format(
-    thousand=thousand,
-    hundred=hundred,
-    zero_to_nine=zero_to_nine,
-    ten_to_ninety=ten_to_ninety,
-)
+"""
 
 occupancy = r"""
 (?:

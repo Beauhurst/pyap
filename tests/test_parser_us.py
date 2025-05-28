@@ -1,4 +1,4 @@
-""" Test for USA address parser """
+"""Test for USA address parser"""
 
 import pytest
 
@@ -106,7 +106,7 @@ def test_thousand(input_data: str, is_match_expected: bool) -> None:
         ("15 ", True),
         ("44 ", True),
         ("256 ", True),
-        ("256 ", True),
+        ("125 ", True),
         ("1256 ", True),
         ("32457 ", True),
         # negative assertions (words)

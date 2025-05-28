@@ -1,4 +1,4 @@
-""" Test for parser classes """
+"""Test for parser classes"""
 
 import pytest
 
