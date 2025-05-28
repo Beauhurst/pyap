@@ -31,7 +31,7 @@ def test_address_class_init() -> None:
 
     assert addr.street == "Street 1b"
 
-    assert addr.dict() == {
+    assert addr.model_dump() == {
         "building_id": None,
         "city": "CityVille",
         "country": None,
