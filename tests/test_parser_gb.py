@@ -457,8 +457,8 @@ def test_postal_code_extensive() -> None:
         with pathlib.Path.open(zip_location, "wb") as f:
             f.write(r.content)
 
-    # Run the detector against this list to ensure we pickup all post codes
-    with zipfile.ZipFile("codepo_gb.zip") as zipfd:
+    # Run the detector against this list to ensure we pick up all post codes
+    with zipfile.ZipFile("tests/code_point_uk_post_codes.zip") as zipfd:
         data_file_names = [
             name
             for name in zipfd.namelist()
