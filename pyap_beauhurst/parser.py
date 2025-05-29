@@ -11,7 +11,7 @@ functionality of the package in one place.
 
 import importlib
 import re
-from typing import Any, cast
+from typing import Any
 
 from . import address, exceptions as e, utils
 
@@ -79,26 +79,7 @@ class AddressParser:
                 cleaned_dict["match_start"] = match.start()
                 cleaned_dict["match_end"] = match.end()
                 # create object containing results
-                return address.Address(
-                    building_id=cast(str | None, cleaned_dict.get("building_id")),
-                    city=cast(str | None, cleaned_dict.get("city")),
-                    country=cast(str | None, cleaned_dict.get("country")),
-                    country_id=cast(str | None, cleaned_dict.get("country_id")),
-                    floor=cast(str | None, cleaned_dict.get("floor")),
-                    full_address=cast(str, cleaned_dict.get("full_address", "")),
-                    full_street=cast(str | None, cleaned_dict.get("full_street")),
-                    match_end=cleaned_dict.get("match_end"),
-                    match_start=cleaned_dict.get("match_start"),
-                    occupancy=cast(str | None, cleaned_dict.get("occupancy")),
-                    postal_code=cast(str | None, cleaned_dict.get("postal_code")),
-                    region1=cast(str | None, cleaned_dict.get("region1")),
-                    route_id=cast(str | None, cleaned_dict.get("route_id")),
-                    state=cast(str | None, cleaned_dict.get("state")),
-                    street=cast(str | None, cleaned_dict.get("street")),
-                    street_name=cast(str | None, cleaned_dict.get("street_name")),
-                    street_number=cast(str | None, cleaned_dict.get("street_number")),
-                    street_type=cast(str | None, cleaned_dict.get("street_type")),
-                )
+                return address.Address.model_validate(cleaned_dict)
 
         return None
 
