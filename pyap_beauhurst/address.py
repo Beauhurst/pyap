@@ -1,37 +1,38 @@
 """
-    pyap.address
-    ~~~~~~~~~~~~~~~~
+pyap.address
+~~~~~~~~~~~~~~~~
 
-    Contains class for constructing Address object which holds information
-    about address and its components.
+Contains class for constructing Address object which holds information
+about address and its components.
 
-    :copyright: (c) 2015 by Vladimir Goncharov.
-    :license: MIT, see LICENSE for more details.
+:copyright: (c) 2015 by Vladimir Goncharov.
+:license: MIT, see LICENSE for more details.
 """
-from typing import Any, Optional, Union
+
+from typing import Any
 
 from pydantic import BaseModel, field_validator
 
 
 class Address(BaseModel):
-    building_id: Optional[str] = None
-    city: Optional[str] = None
-    country: Optional[str] = None
-    country_id: Optional[str] = None
-    floor: Optional[str] = None
+    building_id: str | None = None
+    city: str | None = None
+    country: str | None = None
+    country_id: str | None = None
+    floor: str | None = None
     full_address: str
-    full_street: Optional[str] = None
-    match_end: Optional[Union[int, str]] = None
-    match_start: Optional[Union[int, str]] = None
-    occupancy: Optional[str] = None
-    postal_code: Optional[str] = None
-    region1: Optional[str] = None
-    route_id: Optional[str] = None
-    state: Optional[str] = None
-    street: Optional[str] = None
-    street_name: Optional[str] = None
-    street_number: Optional[str] = None
-    street_type: Optional[str] = None
+    full_street: str | None = None
+    match_end: int | str | None = None
+    match_start: int | str | None = None
+    occupancy: str | None = None
+    postal_code: str | None = None
+    region1: str | None = None
+    route_id: str | None = None
+    state: str | None = None
+    street: str | None = None
+    street_name: str | None = None
+    street_number: str | None = None
+    street_type: str | None = None
 
     @field_validator("*", mode="before")
     @classmethod

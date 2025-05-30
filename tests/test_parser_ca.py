@@ -1,4 +1,4 @@
-""" Tests for CANADA address parser """
+"""Tests for CANADA address parser"""
 
 import pytest
 
@@ -106,7 +106,7 @@ def test_thousand(input_data: str, is_match_expected: bool) -> None:
         ("15 ", True),
         ("44 ", True),
         ("256 ", True),
-        ("256 ", True),
+        ("126 ", True),
         ("1256 ", True),
         ("32457 ", True),
         # negative assertions (words)
@@ -297,7 +297,7 @@ def test_postal_code(input_data: str, is_match_expected: bool) -> None:
         ("Nova Scotia", True),
         ("Colombie-Britannique", True),
         ("New Brunswick", True),
-        ("Quebec", True),
+        ("Quebec", True),  # noqa PT014
         ("Québec", True),
         ("Territoires Du Nord-Ouest", True),
     ],
