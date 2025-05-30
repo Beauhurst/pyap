@@ -1,81 +1,55 @@
 name: Tag & Release
 
 on:
-  pull_request:
-    types:
-      - "closed"
+  push:
     branches:
-      - "main"
+      - 'main'
 
 jobs:
-  build_and_release:
-    if: github.event.pull_request.merged == true && !startsWith(github.head_ref, 'release')
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
+      - uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version-file: ".python-version"
+          python-version: '3.8'
 
-      - name: Bump version
-        run: |
-          git config user.name "Release Bot"
-          git config user.email "dev@beauhurst.com"
-          ./scripts/bump-version.sh
-
-      - name: Get new version
-        id: version
-        run: echo "VERSION=$(uvx --from toml-cli toml get --toml-path pyproject.toml project.version)" >>$GITHUB_OUTPUT
+      - name: Install dev dependencies
+        run: python -m pip install --upgrade pip setuptools poetry
 
       - name: Build binary wheel and a source tarball
-        run: |
-          uv build \
-          --package pyap_beauhurst \
-          --out-dir dist
+        run: poetry build
 
-      - name: Create release branch, push branch, tag and create PR
-        env:
-          TAG_NAME: "v${{ steps.version.outputs.VERSION }}"
-          BRANCH_NAME: "release-v${{ steps.version.outputs.VERSION }}"
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+      - name: Get version
+        run: echo "VERSION=$(poetry version --short)" >>$GITHUB_OUTPUT
+        id: version
 
-          git checkout -b "$BRANCH_NAME"
-          git push origin "$BRANCH_NAME"
-          git push origin tag "$TAG_NAME"
-
-          # create release PR
-          gh pr create \
-            --title "Release $TAG_NAME" \
-            --head "$(git branch --show-current)" \
-            --fill \
-            --base main
-
-      - name: Merge it
-        env:
-          TAG_NAME: "v${{ steps.version.outputs.VERSION }}"
-          GH_TOKEN: ${{ secrets.GA_PAT }}
-        run: |
-          # Merge PR
-          gh pr merge --admin --squash
-
-      - name: Create a GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Tag with updated version
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
         with:
-          prerelease: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generate_release_notes: true
-          files: "./dist/pyap_beauhurst-*"
-          make_latest: true
-          tag_name: ${{ steps.version.outputs.VERSION }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: ${{ steps.version.outputs.VERSION }}
 
+      - name: Create a GitHub release and upload artifact
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          generateReleaseNotes: true
+          artifacts: './dist/pyap_beauhurst-${{ steps.tag_version.outputs.new_version }}.tar.gz,./dist/pyap_beauhurst-${{ steps.tag_version.outputs.new_version }}-py3-none-any.whl'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Latest tag
+        uses: EndBug/latest-tag@v1
+
+      - name: Configure pypi credentials
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          poetry config pypi-token.pypi "$PYPI_TOKEN"
       - name: Publish to pypi
         run: |
-          uv publish --token ${{ secrets.PYPI_TOKEN }}
+          poetry publish
